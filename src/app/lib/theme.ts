@@ -1,15 +1,17 @@
 import { extendTheme } from "@chakra-ui/react";
-import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools"
-
+import { mode } from "@chakra-ui/theme-tools"
+import type { StyleFunctionProps } from "@chakra-ui/styled-system"
 
 const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: true
+  initialColorMode: 'light',
+  useSystemColorMode: false
 }
 
 const styles = {
   global: (props: StyleFunctionProps) => ({
-    bg: mode('gray.800', 'whiteAlpha.900')(props)
+    body: {
+      bg: mode("#fff", '#000')(props)
+    }
   })
 }
 

@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { MainLayout } from "./components/layout/main";
 
 export default function Home() {
   return (
-    <div>Home works</div>
+    <div>Hello worlds</div>
   );
 }
