@@ -1,11 +1,9 @@
 import { Box, List, ListIcon, ListItem, Text } from "@chakra-ui/react"
+import { FaCircle } from "react-icons/fa"
+import { AddIcon } from "../assets/icons/add-button"
 import { HomeIcon } from "../assets/icons/home"
 import { MemberIcon } from "../assets/icons/member"
 import { SettingIcon } from "../assets/icons/setting"
-import { audio } from "framer-motion/client"
-import { AddIcon } from "../assets/icons/add-button"
-import { CircleWithColor } from "./circle-with-color"
-import { FaCircle } from "react-icons/fa"
 
 export const SideBar = () => {
   return (
