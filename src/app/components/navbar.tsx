@@ -28,7 +28,8 @@ export const NavBar = () => {
         borderStyle="solid"
         borderRight="1px"
         borderRightColor="#DBDBDB"
-        padding="30px"
+        padding={{ md: "25px" }}
+        py={{ base: "25px" }}
         display="flex"
         justifyContent="space-between"
       >
