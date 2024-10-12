@@ -2,10 +2,15 @@
 
 import { Box, Text } from "@chakra-ui/react"
 import { ProjectManagementIcon } from "../assets/icons/logo"
-import { DoubleArrowLeft } from "../assets/icons/double-arrow"
+import { DoubleArrowIcon } from "../assets/icons/double-arrow"
+import styled from "@emotion/styled"
 
-
-
+const LogoBox = styled.div`
+  border-right: 1px solid #DBDBDB;
+  border-bottom: 1px solid #DBDBDB;
+  display: flex;
+  justifyContent: space-between;
+`
 
 export const NavBar = () => {
   return (
@@ -18,16 +23,16 @@ export const NavBar = () => {
 
     >
       <Box
-        w={{ md: "300px" }}
+        w={{ md: "255px" }}
         borderRightWidth="1px"
         borderStyle="solid"
         borderRight="1px"
         borderRightColor="#DBDBDB"
-        padding="20px"
+        padding="30px"
         display="flex"
         justifyContent="space-between"
       >
-        <Box display="inline-flex">
+        <Box display={{ base: 'none', md: "inline-flex" }}>
           <ProjectManagementIcon />
           <Text
             ml={3}
@@ -36,7 +41,7 @@ export const NavBar = () => {
             Project M.
           </Text>
         </Box>
-        <DoubleArrowLeft />
+        <DoubleArrowIcon />
       </Box>
     </Box>
   )
