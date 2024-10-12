@@ -1,16 +1,10 @@
 "use client"
 
-import { Box, Text } from "@chakra-ui/react"
+import { Avatar, Box, Flex, Icon, IconButton, Stack, Text } from "@chakra-ui/react"
 import { ProjectManagementIcon } from "../assets/icons/logo"
 import { DoubleArrowIcon } from "../assets/icons/double-arrow"
-import styled from "@emotion/styled"
-
-const LogoBox = styled.div`
-  border-right: 1px solid #DBDBDB;
-  border-bottom: 1px solid #DBDBDB;
-  display: flex;
-  justifyContent: space-between;
-`
+import { NotoficationIcon } from "../assets/icons/notification"
+import { ArrowDown } from "../assets/icons/arrow-down"
 
 export const NavBar = () => {
   return (
@@ -20,6 +14,8 @@ export const NavBar = () => {
       borderBottom="1px"
       borderBottomWidth="1px"
       borderBottomColor="#DBDBDB"
+      display="flex"
+      justifyContent="space-between"
 
     >
       <Box
@@ -44,6 +40,17 @@ export const NavBar = () => {
         </Box>
         <DoubleArrowIcon />
       </Box>
-    </Box>
+      <Flex align="center" mr={5}>
+        <Icon as={NotoficationIcon} />
+        <Flex align="center" ml={6}>
+          <Box lineHeight="sm" textAlign="right">
+            <Text>Anima Agrawal</Text>
+            <Text fontSize="xs">U.P, India</Text>
+          </Box>
+          <Avatar name="avatar" size="sm" ml={5} mr={2} />
+          <Icon as={ArrowDown} />
+        </Flex>
+      </Flex>
+    </Box >
   )
 }
