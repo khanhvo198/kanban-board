@@ -22,7 +22,7 @@ export const ToggleThemeButton = () => {
           display="flex"
           alignItems="center"
           mr={2}
-          color="#787486"
+          color={useColorModeValue('#787486', 'white')}
           strokeWidth="0.7"
           strokeMiterlimit="10"
           strokeLinejoin="round"

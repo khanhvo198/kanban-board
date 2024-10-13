@@ -1,4 +1,4 @@
-import { Box, List, ListIcon, ListItem, Text } from "@chakra-ui/react"
+import { Box, List, ListIcon, ListItem, Text, useColorModeValue } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
 import { AddIcon } from "../assets/icons/add-button"
 import { HomeIcon } from "../assets/icons/home"
@@ -6,6 +6,7 @@ import { MemberIcon } from "../assets/icons/member"
 import { SettingIcon } from "../assets/icons/setting"
 
 export const SideBar = () => {
+  const textColor = useColorModeValue('#787486', 'white')
   return (
     <Box
       display={{ base: "none", md: "block" }}
@@ -34,7 +35,7 @@ export const SideBar = () => {
 
       <List spacing={6} px="20px" py="30px">
         <ListItem display="flex" alignItems="center" justifyContent="space-between">
-          <Text color="#787486" fontSize="sm" fontWeight="bold">MY PROJECTS</Text>
+          <Text color={textColor} fontSize="sm" fontWeight="bold">MY PROJECTS</Text>
           <ListIcon as={AddIcon}></ListIcon>
         </ListItem>
         <ListItem display="flex" alignItems="center">
@@ -43,15 +44,15 @@ export const SideBar = () => {
         </ListItem>
         <ListItem display="flex" alignItems="center">
           <ListIcon as={FaCircle} color="#FFA500" fontSize="8px" />
-          <Text ml={3} color="#787486">Website Redesign</Text>
+          <Text ml={3} color={textColor}>Website Redesign</Text>
         </ListItem>
         <ListItem display="flex" alignItems="center">
           <ListIcon as={FaCircle} color="#E4CCFD" fontSize="8px" />
-          <Text ml={3} color="#787486">Design System</Text>
+          <Text ml={3} color={textColor}>Design System</Text>
         </ListItem>
         <ListItem display="flex" alignItems="center">
           <ListIcon as={FaCircle} color="#76A5EA" fontSize="8px" />
-          <Text ml={3} color="#787486">Wireframes</Text>
+          <Text ml={3} color={textColor}>Wireframes</Text>
         </ListItem>
       </List>
 
