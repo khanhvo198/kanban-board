@@ -3,6 +3,6 @@ import { MainLayout } from "./components/layout/main";
 
 export default function Home() {
   return (
-    <div>Hello worlds</div>
+    <div></div>
   );
 }

@@ -5,6 +5,9 @@ import { ProjectManagementIcon } from "../assets/icons/logo"
 import { DoubleArrowIcon } from "../assets/icons/double-arrow"
 import { NotoficationIcon } from "../assets/icons/notification"
 import { ArrowDown } from "../assets/icons/arrow-down"
+import { MoonIcon, SunIcon } from "@chakra-ui/icons"
+import { CiDark } from "react-icons/ci"
+import { ToggleThemeButton } from "./toggle-theme-button"
 
 export const NavBar = () => {
   return (
@@ -20,10 +23,7 @@ export const NavBar = () => {
     >
       <Box
         w={{ md: "255px" }}
-        borderRightWidth="1px"
-        borderStyle="solid"
-        borderRight="1px"
-        borderRightColor="#DBDBDB"
+        borderRight={{ base: 'none', md: '1px solid #DBDBDB' }}
         padding={{ md: "25px" }}
         py={{ base: "25px" }}
         display="flex"
@@ -41,6 +41,7 @@ export const NavBar = () => {
         <DoubleArrowIcon />
       </Box>
       <Flex align="center" mr={5}>
+        <ToggleThemeButton />
         <Icon as={NotoficationIcon} />
         <Flex align="center" ml={6}>
           <Box lineHeight="sm" textAlign="right">
