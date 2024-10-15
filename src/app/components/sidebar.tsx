@@ -10,7 +10,7 @@ export const SideBar = () => {
   return (
     <Box
       display={{ base: "none", md: "block" }}
-      w={{ md: "255px" }}
+      minW={{ md: "255px" }}
       borderRightWidth="1px"
       borderStyle="solid"
       borderRight="1px"

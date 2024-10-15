@@ -22,7 +22,7 @@ export const NavBar = () => {
 
     >
       <Box
-        w={{ md: "255px" }}
+        minW={{ md: "255px" }}
         borderRight={{ base: 'none', md: '1px solid #DBDBDB' }}
         padding={{ md: "25px" }}
         py={{ base: "25px" }}
