@@ -2,7 +2,7 @@
 
 import { useColorModeValue } from "@chakra-ui/react"
 
-export const NotoficationIcon = () => {
+export const NotificationIcon = () => {
   const strokeColor = useColorModeValue('#787486', 'white')
 
   return (

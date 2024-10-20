@@ -1,9 +1,11 @@
-import { Box, List, ListIcon, ListItem, Text, useColorModeValue } from "@chakra-ui/react"
+import { Avatar, Box, List, ListIcon, ListItem, Text, useColorModeValue } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
 import { AddIcon } from "../assets/icons/add-button"
 import { HomeIcon } from "../assets/icons/home"
 import { MemberIcon } from "../assets/icons/member"
 import { SettingIcon } from "../assets/icons/setting"
+import { NotificationIcon } from "../assets/icons/notification"
+
 
 export const SideBar = () => {
   const textColor = useColorModeValue('#787486', 'white')
@@ -28,6 +30,14 @@ export const SideBar = () => {
         <ListItem display="flex">
           <ListIcon as={SettingIcon} />
           <Text ml={4}>Settings</Text>
+        </ListItem>
+        <ListItem display="flex">
+          <ListIcon as={NotificationIcon} />
+          <Text ml={4}>Notofications</Text>
+        </ListItem>
+        <ListItem display="flex">
+          <Avatar size="xs" />
+          <Text ml={4}>Profile</Text>
         </ListItem>
       </List>
 
