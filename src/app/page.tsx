@@ -1,11 +1,12 @@
 "use client"
-import { Avatar, AvatarGroup, Box, Button, Divider, Flex, Heading, IconButton, List, ListItem, useColorModeValue } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Avatar, AvatarGroup, Box, Button, Divider, Flex, Heading, IconButton, List, ListItem, Stack, Text } from "@chakra-ui/react";
+import { CiViewTable } from "react-icons/ci";
+import { FaCircle } from "react-icons/fa";
+import { LuKanbanSquare } from "react-icons/lu";
+import { CardComponent } from "./components/card";
 import { Section } from "./components/section";
 import { ToggleThemeButton } from "./components/toggle-theme-button";
-import { IoAddCircleOutline, IoRadioButtonOn } from "react-icons/io5";
-import { AddIcon } from "@chakra-ui/icons";
-import { LuKanbanSquare } from "react-icons/lu";
-import { CiViewTable } from "react-icons/ci";
 
 export default function Home() {
   return (
@@ -61,6 +62,20 @@ export default function Home() {
         <Button leftIcon={<LuKanbanSquare />} mr={2}>Kanban</Button>
         <Button leftIcon={<CiViewTable />} colorScheme="blackAlpha">Table</Button>
       </Box>
+      <Stack px={{ base: "1rem" }} w="350px">
+        <Flex align="center">
+          <FaCircle color="red" fontSize="8px" />
+          <Text ml={2}>
+            New Request
+          </Text>
+        </Flex>
+        <IconButton aria-label="add-icon" icon={<AddIcon />} />
+        <List>
+          <ListItem>
+            <CardComponent />
+          </ListItem>
+        </List>
+      </Stack>
     </Box>
   );
 }
