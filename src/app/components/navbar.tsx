@@ -1,13 +1,15 @@
 "use client"
 
 import { AddIcon } from "@chakra-ui/icons"
-import { Avatar, AvatarGroup, Box, Divider, Flex, Heading, IconButton } from "@chakra-ui/react"
+import { Avatar, AvatarGroup, Box, calc, Divider, Flex, Heading, IconButton } from "@chakra-ui/react"
 import { Section } from "./section"
 import { ToggleThemeButton } from "./toggle-theme-button"
 
 export const NavBar = () => {
   return (
     <Box
+      position="fixed"
+      width="-webkit-fill-available"
     >
       <Box
         px={{ base: "1rem", md: "3rem" }}
