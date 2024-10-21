@@ -1,57 +1,58 @@
 "use client"
 
-import { Avatar, Box, Flex, Icon, IconButton, Stack, Text } from "@chakra-ui/react"
-import { ProjectManagementIcon } from "../assets/icons/logo"
-import { DoubleArrowIcon } from "../assets/icons/double-arrow"
-import { NotoficationIcon } from "../assets/icons/notification"
-import { ArrowDown } from "../assets/icons/arrow-down"
-import { MoonIcon, SunIcon } from "@chakra-ui/icons"
-import { CiDark } from "react-icons/ci"
+import { AddIcon } from "@chakra-ui/icons"
+import { Avatar, AvatarGroup, Box, Divider, Flex, Heading, IconButton } from "@chakra-ui/react"
+import { Section } from "./section"
 import { ToggleThemeButton } from "./toggle-theme-button"
 
 export const NavBar = () => {
   return (
     <Box
-      as="nav"
-      w="100%"
-      borderBottom="1px"
-      borderBottomWidth="1px"
-      borderBottomColor="#DBDBDB"
-      display="flex"
-      justifyContent="space-between"
-
     >
       <Box
-        minW={{ md: "255px" }}
-        borderRight={{ base: 'none', md: '1px solid #DBDBDB' }}
-        padding={{ md: "25px" }}
-        py={{ base: "25px" }}
+        px={{ base: "1rem", md: "3rem" }}
+        py={{ base: "0.8", md: "1rem" }}
         display="flex"
         justifyContent="space-between"
+        alignItems="center"
       >
-        <Box display={{ base: 'none', md: "inline-flex" }}>
-          <ProjectManagementIcon />
-          <Text
-            ml={3}
-            fontWeight="semibold"
-          >
-            Project M.
-          </Text>
-        </Box>
-        <DoubleArrowIcon />
-      </Box>
-      <Flex align="center" mr={5}>
+        <Heading as="h2" fontWeight="semibold" fontSize="3xl">
+          Mobile App
+        </Heading>
+
         <ToggleThemeButton />
-        <Icon as={NotoficationIcon} />
-        <Flex align="center" ml={6}>
-          <Box lineHeight="sm" textAlign="right">
-            <Text>Anima Agrawal</Text>
-            <Text fontSize="xs">U.P, India</Text>
-          </Box>
-          <Avatar name="avatar" size="sm" ml={5} mr={2} />
-          <Icon as={ArrowDown} />
+      </Box >
+      <Box
+        px={{ base: "1rem", md: "3rem" }}
+        borderBottom="1px solid #DBDBDB"
+      >
+        <Flex justifyContent="space-between">
+          <Flex>
+            <Section>Discussions</Section>
+            <Section isActive>Tasks</Section>
+            <Section>Files</Section>
+          </Flex>
+
+          <Flex align="center">
+            <AvatarGroup size="sm" max={3} ml="3" px={2}>
+              <Avatar />
+              <Avatar />
+              <Avatar />
+              <Avatar />
+              <Avatar />
+            </AvatarGroup>
+            <Divider orientation='vertical' px={1} borderColor="#DBDBDB" mb={1} h="28px" />
+            <IconButton
+              aria-label="add-member"
+              icon={<AddIcon />}
+              mb={1}
+              borderRadius="full"
+              size="sm"
+            />
+          </Flex>
         </Flex>
-      </Flex>
-    </Box >
+      </Box>
+    </Box>
+
   )
 }
