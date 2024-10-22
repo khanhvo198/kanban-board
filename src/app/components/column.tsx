@@ -13,10 +13,35 @@ export const Column = () => {
         </Text>
       </Flex>
       <IconButton aria-label="add-icon" icon={<AddIcon />} />
-      <List>
+      <List spacing={3}>
         <ListItem>
           <CardComponent />
         </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+        <ListItem>
+          <CardComponent />
+        </ListItem>
+
       </List>
     </Stack>
   )

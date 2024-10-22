@@ -5,7 +5,7 @@ import { NavBar } from "./components/navbar";
 
 export default function Home() {
   return (
-    <Box w="100%">
+    <Box ml={{ base: 0, md: "255px" }} >
       <NavBar />
       <KanbanBoard />
     </Box>

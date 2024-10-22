@@ -17,10 +17,13 @@ export const SideBar = () => {
       borderStyle="solid"
       borderRight="1px"
       borderColor="#DBDBDB"
-      position="sticky"
+      position="fixed"
+      top="0"
       left="0"
+      bottom="100vh"
       bg={useColorModeValue('#fff', '#000')}
       zIndex="100"
+      minH="100%"
     >
       <List spacing={6} px="20px" py="30px">
         <ListItem display="flex">
