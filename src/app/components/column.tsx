@@ -1,11 +1,35 @@
 import { AddIcon } from "@chakra-ui/icons"
 import { Stack, Flex, IconButton, List, ListItem, Text } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
-import { CardComponent } from "./card"
+import { CardComponent, CardProps } from "./card"
+import { useDrop } from "react-dnd"
+import { useRef } from "react"
+import { ItemType } from "../types"
 
-export const Column = () => {
+export interface ColumnProps {
+  cards: CardProps[],
+  onDrop: (card: CardProps, status: string) => void,
+  status: string
+}
+
+export const Column = ({ cards, onDrop, status }: ColumnProps) => {
+  const ref = useRef(null)
+  const [{ isOver }, drop] = useDrop({
+    accept: ItemType.CARD,
+    drop: (item: CardProps) => onDrop(item, status),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  })
+
+  drop(ref)
+
   return (
-    <Stack w="350px">
+    <Stack
+      ref={ref}
+      w="350px"
+      pb="30rem"
+    >
       <Flex align="center">
         <FaCircle color="red" fontSize="8px" />
         <Text ml={2}>
@@ -14,34 +38,11 @@ export const Column = () => {
       </Flex>
       <IconButton aria-label="add-icon" icon={<AddIcon />} />
       <List spacing={3}>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-        <ListItem>
-          <CardComponent />
-        </ListItem>
-
+        {cards.map((card) => (
+          <ListItem>
+            <CardComponent card={card} />
+          </ListItem>
+        ))}
       </List>
     </Stack>
   )
