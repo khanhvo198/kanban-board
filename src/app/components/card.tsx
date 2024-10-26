@@ -12,7 +12,6 @@ export interface CardProps {
 
 export const CardComponent = ({ card, index }: { card: CardProps, index: number }) => {
 
-
   return (
     <Draggable key={String(card.id)} draggableId={String(card.id)} index={index}>
       {(provided, snapshot) => (

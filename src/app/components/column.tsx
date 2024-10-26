@@ -15,7 +15,6 @@ export const Column = ({ cards, status }: ColumnProps) => {
   return (
     <Stack
       w="350px"
-      pb="30rem"
     >
       <Flex align="center">
         <FaCircle color="red" fontSize="8px" />
@@ -28,6 +27,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
         {(droppableProvided, snapshot) => (
           <List
             as="div"
+            pb="10rem"
             spacing={3}
             ref={droppableProvided.innerRef}
             {...droppableProvided.droppableProps}
@@ -38,6 +38,9 @@ export const Column = ({ cards, status }: ColumnProps) => {
                   <CardComponent card={card} index={index} />
                 </ListItem>
               ))
+            }
+            {
+              droppableProvided.placeholder
             }
           </List>
         )}

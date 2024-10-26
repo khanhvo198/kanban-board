@@ -1,12 +1,8 @@
 import { Box } from "@chakra-ui/react"
 import { DragDropContext, DropResult } from "@hello-pangea/dnd"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { CardProps } from "./card"
 import { Column } from "./column"
-interface DataType {
-  columnname: string,
-  cards: CardProps[]
-}
 
 const data: CardProps[] = [
   {
@@ -31,12 +27,15 @@ const data: CardProps[] = [
   },
 ]
 
+type CardWithStatus = Record<string, CardProps[]>
+
+
 export const KanbanBoard = () => {
 
 
   const statuses = ["NEW", "IN_PROGRESS"]
 
-  const [tasks, setTasks] = useState<CardProps[]>(data)
+  const [tasks, setTasks] = useState<CardWithStatus>(Object.groupBy(data, ({ status }) => status) as CardWithStatus)
 
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -46,11 +45,69 @@ export const KanbanBoard = () => {
     }
 
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
-      return
+      return;
     }
+
+    console.log(destination, source)
+
+    const sourceStatus = source.droppableId as CardProps["status"];
+    const destinationStatus = destination.droppableId as CardProps["status"];
+    const sourcePost = tasks[sourceStatus][source.index]!;
+    const destinationPost = tasks[destinationStatus][
+      destination.index
+    ] ?? {
+      status: destinationStatus,
+      index: undefined, // undefined if dropped after the last item
+    };
+
+    // compute local state change synchronously
+    setTasks(
+      updatePostStatusLocal(
+        sourcePost,
+        { status: sourceStatus, index: source.index },
+        { status: destinationStatus, index: destination.index },
+        tasks
+      )
+    );
+
+
   }
 
-
+  const updatePostStatusLocal = (
+    sourcePost: CardProps,
+    source: { status: CardProps["status"]; index: number },
+    destination: {
+      status: CardProps["status"];
+      index?: number; // undefined if dropped after the last item
+    },
+    tasks: CardWithStatus
+  ) => {
+    if (source.status === destination.status) {
+      // moving deal inside the same column
+      const column = tasks[source.status];
+      column.splice(source.index, 1);
+      column.splice(destination.index ?? column.length + 1, 0, sourcePost);
+      return {
+        ...tasks,
+        [destination.status]: column,
+      };
+    } else {
+      // moving deal across columns
+      const sourceColumn = tasks[source.status];
+      const destinationColumn = tasks[destination.status];
+      sourceColumn.splice(source.index, 1);
+      destinationColumn.splice(
+        destination.index ?? destinationColumn.length + 1,
+        0,
+        sourcePost
+      );
+      return {
+        ...tasks,
+        [source.status]: sourceColumn,
+        [destination.status]: destinationColumn,
+      };
+    }
+  };
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Box
@@ -65,8 +122,7 @@ export const KanbanBoard = () => {
         >
           {
             statuses.map(status => {
-              const cards: CardProps[] = tasks.filter(task => task.status === status)
-              return <Column cards={cards} status={status} key={status} />
+              return <Column cards={tasks[status]} status={status} key={status} />
             })
           }
         </Box>
