@@ -8,22 +8,22 @@ const data: CardProps[] = [
   {
     id: 1,
     text: "hehehe1",
-    status: "NEW"
+    status: "New"
   },
   {
     id: 2,
     text: "hehehe2",
-    status: "NEW"
+    status: "New"
   },
   {
     id: 3,
     text: "hehehe3",
-    status: "IN_PROGRESS"
+    status: "In progress"
   },
   {
     id: 4,
     text: "hehehe4",
-    status: "IN_PROGRESS"
+    status: "In progress"
   },
 ]
 
@@ -33,7 +33,7 @@ type CardWithStatus = Record<string, CardProps[]>
 export const KanbanBoard = () => {
 
 
-  const statuses = ["NEW", "IN_PROGRESS"]
+  const statuses = ["New", "In progress"]
 
   const [tasks, setTasks] = useState<CardWithStatus>(Object.groupBy(data, ({ status }) => status) as CardWithStatus)
 
