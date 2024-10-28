@@ -1,21 +1,20 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Button, Checkbox, Flex, FormControl, FormLabel, Input, List, ListIcon, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, Textarea, useDisclosure, VStack } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, List, ListIcon, ListItem, Stack, Text, Textarea } from "@chakra-ui/react";
+import { Select } from "chakra-react-select";
 import { FC, useState } from "react";
 import { CiCircleRemove } from "react-icons/ci";
-import { FaRegCircle } from "react-icons/fa";
-import { Select } from "chakra-react-select"
 import { MdOutlineChecklist } from "react-icons/md";
+import { FileUpload } from "../components/file-upload";
 
 interface TaskFormProps {
 
 }
 
-
 export const AddNewTaskForm: FC<TaskFormProps> = () => {
   const [checkList, setCheckList] = useState<string[]>([])
+  const [files, setFiles] = useState<File[]>([])
 
   const handleAddNewCheckList = () => {
-
     setCheckList([
       ...checkList,
       ""
@@ -27,11 +26,24 @@ export const AddNewTaskForm: FC<TaskFormProps> = () => {
     setCheckList([...checkList])
   }
 
+  const handleRemoveFile = (index: number) => {
+    files.splice(index, 1)
+    setFiles([...files])
+  }
+
   const handleOnChangeCheckList = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     checkList[index] = event.target.value
     setCheckList([
       ...checkList
     ])
+  }
+
+  const handleOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files)
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files)
+      setFiles((prevFiles) => [...prevFiles, ...newFiles])
+    }
   }
 
   return (
@@ -72,7 +84,7 @@ export const AddNewTaskForm: FC<TaskFormProps> = () => {
         </FormControl>
         <FormControl mt={6}>
           <Flex justify="space-between" align="center">
-            <FormLabel fontWeight="semibold">Check list</FormLabel>
+            <FormLabel fontWeight="semibold" m="0">Check list</FormLabel>
             <AddIcon onClick={handleAddNewCheckList} cursor="pointer" />
           </Flex>
           <List>
@@ -80,9 +92,25 @@ export const AddNewTaskForm: FC<TaskFormProps> = () => {
               <ListItem display="flex" alignItems="center" key={index}>
                 <ListIcon as={MdOutlineChecklist} />
                 <Input variant="flushed" value={text} onChange={(event) => handleOnChangeCheckList(event, index)} />
-                <ListIcon as={CiCircleRemove} fontSize="20" onClick={() => handleRemoveCheckList(index)} />
+                <ListIcon as={CiCircleRemove} fontSize="20" onClick={() => handleRemoveCheckList(index)} cursor="pointer" />
               </ListItem>
             ))}
+          </List>
+        </FormControl>
+        <FormControl mt={6}>
+          <Flex justify="space-between" align="center">
+            <FormLabel fontWeight="semibold" m="0">Attachments</FormLabel>
+            <FileUpload onChange={handleOnFileChange} />
+          </Flex>
+          <List spacing={2} mt={2}>
+            {
+              files.map((file, index) => (
+                <ListItem key={index} display="flex" alignItems="center" justifyItems="space-between">
+                  <Text flexGrow="1">{file.name}</Text>
+                  <ListIcon as={CiCircleRemove} fontSize="20" onClick={() => handleRemoveFile(index)} cursor="pointer" />
+                </ListItem>
+              ))
+            }
           </List>
         </FormControl>
         <FormControl mt={6}>
