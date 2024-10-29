@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react"
 import { DragDropContext, DropResult } from "@hello-pangea/dnd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CardProps } from "./card"
 import { Column } from "./column"
 
@@ -35,7 +35,11 @@ export const KanbanBoard = () => {
 
   const statuses = ["New", "In progress"]
 
-  const [tasks, setTasks] = useState<CardWithStatus>(Object.groupBy(data, ({ status }) => status) as CardWithStatus)
+  const [tasks, setTasks] = useState<CardWithStatus>({})
+
+  useEffect(() => {
+    setTasks(Object.groupBy(data, ({ status }) => status) as CardWithStatus)
+  }, [])
 
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -47,8 +51,6 @@ export const KanbanBoard = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-
-    console.log(destination, source)
 
     const sourceStatus = source.droppableId as CardProps["status"];
     const destinationStatus = destination.droppableId as CardProps["status"];
