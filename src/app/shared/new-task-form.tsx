@@ -106,7 +106,7 @@ export const AddNewTaskForm: FC<TaskFormProps> = () => {
             {
               files.map((file, index) => (
                 <ListItem key={index} display="flex" alignItems="center" justifyItems="space-between">
-                  <Text flexGrow="1">{file.name}</Text>
+                  <Text flexGrow="1" isTruncated>{file.name}</Text>
                   <ListIcon as={CiCircleRemove} fontSize="20" onClick={() => handleRemoveFile(index)} cursor="pointer" />
                 </ListItem>
               ))

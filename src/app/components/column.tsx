@@ -14,6 +14,7 @@ export interface ColumnProps {
 export const Column = ({ cards, status }: ColumnProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const handleSubmit = () => { }
 
   return (
     <>
@@ -37,7 +38,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
               {...droppableProvided.droppableProps}
             >
               {
-                cards.map((card, index) => (
+                cards && cards.map((card, index) => (
                   <ListItem key={card.id}>
                     <CardComponent card={card} index={index} />
                   </ListItem>
@@ -59,6 +60,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
             <AddNewTaskForm />
           </ModalBody>
           <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>Create</Button>
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
