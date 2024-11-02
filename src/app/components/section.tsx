@@ -1,10 +1,18 @@
-"use client"
-import { Box, calc, useColorModeValue } from "@chakra-ui/react"
+import { Box, useColorModeValue } from "@chakra-ui/react"
+import { FC, ReactNode } from "react"
 
-export const Section = ({ children, isActive = false }: { children: React.ReactNode, isActive?: Boolean }) => {
+export interface SectionProps {
+  children: ReactNode,
+  isActive?: boolean,
+  onClick?: () => void,
+}
+
+
+export const Section: FC<SectionProps> = ({ isActive, children, onClick }) => {
   const borderColor = useColorModeValue('#000', '#fff')
+
   return (
-    <Box mr={5} borderBottom={isActive ? `2px solid ${borderColor}` : ''}>
+    <Box mr={5} onClick={onClick} borderBottom={isActive ? `2px solid ${borderColor}` : ''} cursor="pointer">
       {children}
     </Box>
   )
