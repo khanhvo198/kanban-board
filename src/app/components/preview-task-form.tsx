@@ -1,16 +1,15 @@
-import { Avatar, AvatarGroup, DrawerBody, DrawerHeader, Flex, Stack, Tag, Text } from "@chakra-ui/react"
+import { Avatar, AvatarGroup, Box, DrawerBody, DrawerHeader, Flex, Stack, Tag, Text } from "@chakra-ui/react"
 import { TbEdit } from "react-icons/tb"
 import { Section } from "./section"
 import { PropertyCard } from "./property-card"
 import { useState } from "react"
-import { DescriptionTab } from "./description-tab"
 import { NavigationTab } from "./navigation-tab"
 
-export type TAB = "DESCRIPTION" | "COMMENTS" | "ACTIVITIES"
+export type TAB = "CHECKLISTS" | "COMMENTS" | "ACTIVITIES"
 
 export const PreviewTaskForm = () => {
 
-  const [tab, setTab] = useState<TAB>("DESCRIPTION")
+  const [tab, setTab] = useState<TAB>("CHECKLISTS")
 
   return (
     <Stack>
@@ -48,13 +47,32 @@ export const PreviewTaskForm = () => {
           <PropertyCard label="Created by">
             <Avatar size="sm" />
           </PropertyCard>
+
+          <PropertyCard label="Description" isVertical>
+            <Box
+              w="100%"
+              pb={20}
+              borderRadius="20px"
+              bg="#F0F0F0"
+              mt={2}
+              pl={5}
+              pt={3}
+            >
+              Hello worlds
+            </Box>
+          </PropertyCard>
+
+          <PropertyCard label="Attachments" isVertical>
+
+          </PropertyCard>
+
         </Stack>
         <Stack mt={5}>
           <Flex
             h="2.2rem"
             borderBottom="1px solid #DBDBDB"
           >
-            <Section isActive={tab === "DESCRIPTION"} onClick={() => setTab("DESCRIPTION")}>Description</Section>
+            <Section isActive={tab === "CHECKLISTS"} onClick={() => setTab("CHECKLISTS")}>Checklists</Section>
             <Section isActive={tab === "COMMENTS"} onClick={() => setTab("COMMENTS")}>Comments</Section>
             <Section isActive={tab === "ACTIVITIES"} onClick={() => setTab("ACTIVITIES")}>Activities</Section>
           </Flex>

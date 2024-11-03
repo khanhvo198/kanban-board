@@ -1,15 +1,15 @@
 import { FC } from "react"
-import { DescriptionTab } from "./description-tab"
-import { CommentsTab } from "./comments-tab"
 import { ActivitiesTab } from "./activities-tab"
+import { CommentsTab } from "./comments-tab"
+import { CheckListsTab } from "./checklists-tab"
 
 interface NavigationTabProps {
   tab: string
 }
 
 export const NavigationTab: FC<NavigationTabProps> = ({ tab }) => {
-  if (tab === "DESCRIPTION") {
-    return <DescriptionTab />
+  if (tab === "CHECKLISTS") {
+    return <CheckListsTab />
   } else if (tab === "COMMENTS") {
     return <CommentsTab />
   } else if (tab === "ACTIVITIES") {
