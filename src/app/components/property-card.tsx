@@ -11,7 +11,7 @@ export const PropertyCard: FC<FieldCardProps> = ({ label, isVertical, children }
   return (
     <Flex w="100%" direction={isVertical ? "column" : "row"}>
       <Flex flex="1">
-        <Text>{label}</Text>
+        <Text fontWeight="semibold">{label}</Text>
       </Flex>
       <Flex flex="2" align="center">
         {children}
