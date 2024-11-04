@@ -34,7 +34,19 @@ const mockCheckListData: CheckListState[] = [
     id: 3,
     isChecked: false,
     text: "Complete task 3"
+  },
+  {
+    id: 4,
+    isChecked: false,
+    text: "Complete task 3"
+  },
+  {
+    id: 5,
+    isChecked: false,
+    text: "Complete task 3"
   }
+
+
 ]
 
 const mockFileData: AttachmentState[] = [

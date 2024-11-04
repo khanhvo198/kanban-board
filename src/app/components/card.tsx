@@ -79,7 +79,7 @@ export const CardComponent = ({ card, index }: { card: CardProps, index: number 
         size="md"
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent overflow="scroll">
           <PreviewTaskForm />
         </DrawerContent>
       </Drawer >
