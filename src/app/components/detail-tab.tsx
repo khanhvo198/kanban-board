@@ -94,7 +94,6 @@ export const DetailTab = () => {
 
   return (
     <Stack>
-
       <Box
         w="100%"
         pb={20}
