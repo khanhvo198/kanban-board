@@ -1,17 +1,14 @@
-import { Avatar, Box, List, ListIcon, ListItem, Text, useColorModeValue } from "@chakra-ui/react"
+import { Avatar, Box, Flex, List, ListIcon, ListItem, Stack, Text, useColorModeValue } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
 import { AddIcon } from "../assets/icons/add-button"
-import { HomeIcon } from "../assets/icons/home"
-import { MemberIcon } from "../assets/icons/member"
-import { SettingIcon } from "../assets/icons/setting"
-import { NotificationIcon } from "../assets/icons/notification"
 
 
 export const SideBar = () => {
   const textColor = useColorModeValue('#787486', 'white')
   return (
     <Box
-      display={{ base: "none", md: "block" }}
+      display={{ base: "none", md: "flex" }}
+      flexDirection="column"
       minW={{ md: "255px" }}
       borderRightWidth="1px"
       borderStyle="solid"
@@ -24,32 +21,33 @@ export const SideBar = () => {
       bg={useColorModeValue('#fff', '#000')}
       zIndex="100"
       minH="100%"
+      justifyContent="space-between"
     >
-      <List spacing={6} px="20px" py="30px">
-        <ListItem display="flex">
-          <ListIcon as={HomeIcon} />
-          <Text ml={4}>Home</Text>
-        </ListItem>
-        <ListItem display="flex">
-          <ListIcon as={MemberIcon} />
-          <Text ml={4}>Members</Text>
-        </ListItem>
-        <ListItem display="flex">
-          <ListIcon as={SettingIcon} />
-          <Text ml={4}>Settings</Text>
-        </ListItem>
-        <ListItem display="flex">
-          <ListIcon as={NotificationIcon} />
-          <Text ml={4}>Notofications</Text>
-        </ListItem>
-        <ListItem display="flex">
-          <Avatar size="xs" />
-          <Text ml={4}>Profile</Text>
-        </ListItem>
-      </List>
-
-      <hr style={{ width: "90%", margin: "auto", borderColor: "#DBDBDB" }} />
-
+      {/* <List spacing={6} px="20px" py="30px"> */}
+      {/*   <ListItem display="flex"> */}
+      {/*     <ListIcon as={HomeIcon} /> */}
+      {/*     <Text ml={4}>Home</Text> */}
+      {/*   </ListItem> */}
+      {/*   <ListItem display="flex"> */}
+      {/*     <ListIcon as={MemberIcon} /> */}
+      {/*     <Text ml={4}>Members</Text> */}
+      {/*   </ListItem> */}
+      {/*   <ListItem display="flex"> */}
+      {/*     <ListIcon as={SettingIcon} /> */}
+      {/*     <Text ml={4}>Settings</Text> */}
+      {/*   </ListItem> */}
+      {/*   <ListItem display="flex"> */}
+      {/*     <ListIcon as={NotificationIcon} /> */}
+      {/*     <Text ml={4}>Notofications</Text> */}
+      {/*   </ListItem> */}
+      {/*   <ListItem display="flex"> */}
+      {/*     <Avatar size="xs" /> */}
+      {/*     <Text ml={4}>Profile</Text> */}
+      {/*   </ListItem> */}
+      {/* </List> */}
+      {/**/}
+      {/* <hr style={{ width: "90%", margin: "auto", borderColor: "#DBDBDB" }} /> */}
+      {/**/}
       <List spacing={6} px="20px" py="30px">
         <ListItem display="flex" alignItems="center" justifyContent="space-between">
           <Text color={textColor} fontSize="sm" fontWeight="bold">MY PROJECTS</Text>
@@ -73,6 +71,16 @@ export const SideBar = () => {
         </ListItem>
       </List>
 
+      <Stack mb={5}>
+        <hr style={{ width: "100%", margin: "auto", borderColor: "#DBDBDB" }} />
+        <Flex alignItems="center" justifyContent="center">
+          <Avatar size="sm" />
+          <Stack ml="1rem" spacing={0}>
+            <Text fontWeight="semibold">Khanh Vo Tuan</Text>
+            <Text color="#868686">KhanhVT4@fpt.com</Text>
+          </Stack>
+        </Flex>
+      </Stack>
     </Box >
   )
 }
