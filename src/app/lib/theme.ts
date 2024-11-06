@@ -15,9 +15,19 @@ const styles = {
   })
 }
 
+const components = {
+  Button: {
+    baseStyle: {
+      _focus: {
+        boxShadow: "none"
+      }
+    }
+  }
+}
+
 
 const theme = extendTheme({
-  config, styles
+  config, styles, components
 });
 
 export default theme
