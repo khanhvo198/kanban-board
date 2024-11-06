@@ -1,11 +1,12 @@
 "use client"
 
 import { AddIcon } from "@chakra-ui/icons"
-import { Avatar, AvatarGroup, Box, Button, calc, Divider, Flex, Heading, IconButton, useColorModeValue } from "@chakra-ui/react"
+import { Avatar, AvatarGroup, Box, Button, calc, Divider, Flex, Heading, IconButton, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, useColorModeValue } from "@chakra-ui/react"
 import { Section } from "./section"
 import { ToggleThemeButton } from "./toggle-theme-button"
 import { CiViewTable } from "react-icons/ci"
 import { LuKanbanSquare } from "react-icons/lu"
+import { AddMemberButton } from "./add-member-button"
 
 export const NavBar = () => {
   return (
@@ -49,13 +50,7 @@ export const NavBar = () => {
               <Avatar />
             </AvatarGroup>
             <Divider orientation='vertical' px={1} borderColor="#DBDBDB" mb={1} h="28px" />
-            <IconButton
-              aria-label="add-member"
-              icon={<AddIcon />}
-              mb={1}
-              borderRadius="full"
-              size="sm"
-            />
+            <AddMemberButton />
           </Flex>
         </Flex>
       </Box>
@@ -66,8 +61,6 @@ export const NavBar = () => {
         <Button leftIcon={<LuKanbanSquare />} mr={2}>Kanban</Button>
         <Button leftIcon={<CiViewTable />} colorScheme="blackAlpha">Table</Button>
       </Box>
-
     </Box>
-
   )
 }
