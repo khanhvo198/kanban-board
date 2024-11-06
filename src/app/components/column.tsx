@@ -21,13 +21,16 @@ export const Column = ({ cards, status }: ColumnProps) => {
       <Stack
         w="350px"
       >
-        <Flex align="center">
-          <FaCircle color="red" fontSize="8px" />
-          <Text ml={2}>
-            {status}
-          </Text>
+        <Flex justifyContent="space-between">
+          <Flex align="center">
+            <FaCircle color="red" fontSize="8px" />
+            <Text ml={2}>
+              {status}
+            </Text>
+          </Flex>
+          <IconButton icon={<AddIcon />} aria-label="add-new-task" onClick={onOpen} />
         </Flex>
-        <IconButton aria-label="add-icon" icon={<AddIcon />} onClick={onOpen} />
+        {/* <IconButton aria-label="add-icon" icon={<AddIcon />} onClick={onOpen} /> */}
         <Droppable droppableId={status}>
           {(droppableProvided, snapshot) => (
             <List

@@ -1,6 +1,6 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Button, FormControl, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react"
 import { DragDropContext, DropResult } from "@hello-pangea/dnd"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CardProps } from "./card"
 import { Column } from "./column"
 
@@ -25,6 +25,28 @@ const data: CardProps[] = [
     text: "hehehe4",
     status: "In progress"
   },
+  {
+    id: 5,
+    text: "hehehe5",
+    status: "Done"
+  },
+  {
+    id: 6,
+    text: "hehehe6",
+    status: "Done"
+  },
+  {
+    id: 7,
+    text: "hehehe7",
+    status: "Done"
+  },
+  {
+    id: 8,
+    text: "hehehe8",
+    status: "Done"
+  },
+
+
 ]
 
 type CardWithStatus = Record<string, CardProps[]>
@@ -33,9 +55,30 @@ type CardWithStatus = Record<string, CardProps[]>
 export const KanbanBoard = () => {
 
 
-  const statuses = ["New", "In progress"]
+  const [statuses, setStatuses] = useState<string[]>(["New", "In progress", "Done"])
 
   const [tasks, setTasks] = useState<CardWithStatus>({})
+
+  const { isOpen, onClose, onOpen } = useDisclosure()
+
+  const titleRef = useRef<HTMLInputElement>(null)
+
+
+  const handleCreateNewList = () => {
+    if (!titleRef.current) {
+      return
+    }
+    const title = titleRef.current.value
+    statuses.push(title)
+
+    setStatuses([
+      ...statuses
+    ])
+
+
+    onClose()
+  }
+
 
   useEffect(() => {
     setTasks(Object.groupBy(data, ({ status }) => status) as CardWithStatus)
@@ -111,24 +154,47 @@ export const KanbanBoard = () => {
     }
   };
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Box
-        pt={{ base: "12rem" }}
-        px={{ base: "1rem" }}
-      >
+    <>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Box
-          display="flex"
-          justifyContent="space-between"
-          minW="700px"
-          gap={2}
+          pt={{ base: "12rem" }}
+          px={{ base: "1rem" }}
         >
-          {
-            statuses.map(status => {
-              return <Column cards={tasks[status]} status={status} key={status} />
-            })
-          }
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            minW="700px"
+            gap={2}
+          >
+            {
+              statuses.map(status => {
+                return <Column cards={tasks[status]} status={status} key={status} />
+              })
+            }
+
+            <Stack w="350px">
+              <Button onClick={onOpen} >Add another list</Button>
+            </Stack>
+          </Box>
         </Box>
-      </Box>
-    </DragDropContext>
+      </DragDropContext>
+
+      <Modal onClose={onClose} size={{ base: 'sm', md: 'md' }} isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Create New List</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <Input variant="flushed" ref={titleRef} placeholder='Add title for this list' size="lg" />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleCreateNewList}>Create</Button>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
