@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Flex, FormControl, Icon, IconButton, Input, List, ListIcon, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
-import { AddIcon } from "../public/assets/icons/add-button"
+import { AddIcon } from "../../public/assets/icons/add-button"
 import { useRef } from "react"
 
 
