@@ -1,6 +1,7 @@
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Link, Stack, Text } from "@chakra-ui/react";
+import { FcGoogle } from "react-icons/fc";
 
-export default function Login() {
+export default function Register() {
   return (
     <Box
       bgImg={"assets/images/bg.png"}
@@ -17,7 +18,7 @@ export default function Login() {
         p="24px"
         width={{ base: "80%", md: "50%", lg: "30%" }}
       >
-        <Heading textAlign="center">Login to your account</Heading>
+        <Heading textAlign="center">Register</Heading>
         <Stack spacing={5} mt="2rem">
           <FormControl>
             <FormLabel>Email</FormLabel>
@@ -25,19 +26,24 @@ export default function Login() {
           </FormControl>
 
           <FormControl>
-            <Flex justifyContent="space-between">
-              <FormLabel>Password</FormLabel>
-              <Link color="#1570EF" href="#">Forgot ?</Link>
-            </Flex>
+            <FormLabel>Password</FormLabel>
             <Input type="password" borderColor="#868686" />
           </FormControl>
-          <Button colorScheme="blue" mt="1rem">Login</Button>
-          <Text textAlign="center">Don't have an account? <Link color="#1570EF" href="/register">Register</Link></Text>
+
+          <FormControl>
+            <FormLabel>Confirm Password</FormLabel>
+            <Input type="password" borderColor="#868686" />
+          </FormControl>
+
+
+          <Button colorScheme="blue" mt="1rem">Register</Button>
+        </Stack>
+        <Stack mt="0.5rem">
+          <Button leftIcon={<FcGoogle size="24px" />} width="100%">Continue with Google</Button>
         </Stack>
 
       </Box>
     </Box>
+
   )
-
-
 }
