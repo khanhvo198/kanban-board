@@ -1,4 +1,4 @@
-import { MainLayout } from "./components/layout/main";
+import { MainLayout } from "../components/layout/main";
 import "./globals.css";
 import { Providers } from "./providers";
 
