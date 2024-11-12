@@ -1,43 +1,24 @@
 "use client"
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Link, Stack, Text } from "@chakra-ui/react";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
+import login from "./action";
 
 
-type FormData = {
+export type LoginFormData = {
   email: string,
   password: string
 }
 
-const API_URL = 'http://localhost:8080/api'
 
 export default function Login() {
-
-  const { register, handleSubmit } = useForm<FormData>({ mode: 'onChange' })
-
-  const router = useRouter()
-
-  const onSubmit = async (data: FormData) => {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-
-    if (!res.ok) {
-      // TODO: show error
-      return
-    }
-
-    const parsedRes = await res.json()
-    router.push("/")
-
-  }
+  const [state, formAction] = useFormState(login, null)
+  const { register } = useForm<LoginFormData>({ mode: 'onChange' })
 
   return (
     <Box>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form action={formAction}>
         <Heading textAlign="center">Login to your account</Heading>
         <Stack spacing={5} mt="2rem">
           <FormControl>
