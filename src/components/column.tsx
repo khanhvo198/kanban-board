@@ -3,7 +3,7 @@ import { Button, Flex, IconButton, List, ListItem, Modal, ModalBody, ModalCloseB
 import { FaCircle } from "react-icons/fa"
 import { CardComponent, CardProps } from "./card"
 import { Droppable } from "@hello-pangea/dnd"
-import { AddNewTaskForm } from "@/shared/new-task-form"
+import { AddNewTaskForm } from "@/shared/ui/new-task-form"
 
 export interface ColumnProps {
   cards: CardProps[],

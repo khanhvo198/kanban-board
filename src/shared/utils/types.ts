@@ -1,3 +1,4 @@
+
 export const ItemType = {
   CARD: "CARD"
 }
@@ -14,3 +15,15 @@ export type State =
     errors?: Array<{ path: string, message: string }>
   } |
   null
+
+export type RegisterFormData = {
+  email: string,
+  password: string,
+  confirmPassword: string
+}
+
+export type LoginFormData = {
+  email: string,
+  password: string
+}
+

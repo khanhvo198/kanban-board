@@ -4,7 +4,7 @@ import { Select } from "chakra-react-select";
 import { FC, useState } from "react";
 import { CiCircleRemove } from "react-icons/ci";
 import { MdOutlineChecklist } from "react-icons/md";
-import { FileUpload } from "../components/file-upload";
+import { FileUpload } from "../../components/file-upload";
 
 interface TaskFormProps {
 
