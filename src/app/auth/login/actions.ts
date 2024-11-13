@@ -1,24 +1,21 @@
 "use server"
-import { API_URL } from "@/shared/constants"
-import { State } from "@/shared/types"
+import { API_URL } from "@/shared/utils/constants"
+import { State } from "@/shared/utils/types"
 import { jwtDecode } from "jwt-decode"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-export default async function login(_prevState: State, formData: FormData) {
+export default async function loginAction(prevState: State, formData: FormData) {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(Object.fromEntries(formData)),
   })
 
-  const parsedRes = await res.json()
-
   if (!res.ok) {
-    // TODO: validate and show error here
     return {
       status: "error" as const,
-      message: parsedRes.error
+      message: "Email or password is invalid"
     }
   }
 
