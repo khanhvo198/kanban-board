@@ -1,9 +1,10 @@
 import { AddIcon } from "@chakra-ui/icons"
-import { Button, Flex, IconButton, List, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useDisclosure } from "@chakra-ui/react"
+import { Box, Button, Flex, IconButton, List, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useDisclosure } from "@chakra-ui/react"
 import { FaCircle } from "react-icons/fa"
 import { CardComponent, CardProps } from "./card"
 import { Droppable } from "@hello-pangea/dnd"
 import { AddNewTaskForm } from "@/shared/ui/new-task-form"
+import { useEffect, useMemo, useRef } from "react"
 
 export interface ColumnProps {
   cards: CardProps[],
@@ -33,27 +34,29 @@ export const Column = ({ cards, status }: ColumnProps) => {
         {/* <IconButton aria-label="add-icon" icon={<AddIcon />} onClick={onOpen} /> */}
         <Droppable droppableId={status}>
           {(droppableProvided, snapshot) => (
-            <List
-              as="div"
-              pb="10rem"
-              spacing={3}
-              ref={droppableProvided.innerRef}
-              {...droppableProvided.droppableProps}
-            >
-              {
-                cards && cards.map((card, index) => (
-                  <ListItem key={card.id}>
-                    <CardComponent card={card} index={index} />
-                  </ListItem>
-                ))
-              }
-              {
-                droppableProvided.placeholder
-              }
-            </List>
+            <Box maxHeight="calc(100vh - 12rem) " overflowY="scroll">
+              <List
+                as="div"
+                pb="5rem"
+                spacing={3}
+                ref={droppableProvided.innerRef}
+                {...droppableProvided.droppableProps}
+              >
+                {
+                  cards && cards.map((card, index) => (
+                    <ListItem key={card.id}>
+                      <CardComponent card={card} index={index} />
+                    </ListItem>
+                  ))
+                }
+                {
+                  droppableProvided.placeholder
+                }
+              </List>
+            </Box>
           )}
         </Droppable>
-      </Stack>
+      </Stack >
       <Modal onClose={onClose} size={{ base: 'sm', md: 'md' }} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
