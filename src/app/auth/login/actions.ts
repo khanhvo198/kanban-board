@@ -1,6 +1,8 @@
 "use server"
 import { API_URL } from "@/shared/utils/constants"
-import { State } from "@/shared/utils/types"
+import { State, User } from "@/shared/utils/types"
+import { useAuthStore } from "@/stores/auth.store"
+import { useSideBarStore } from "@/stores/sidebar.store"
 import { jwtDecode } from "jwt-decode"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
@@ -12,6 +14,8 @@ export default async function loginAction(prevState: State, formData: FormData) 
     body: JSON.stringify(Object.fromEntries(formData)),
   })
 
+  const parsedRes = await res.json()
+
   if (!res.ok) {
     return {
       status: "error" as const,
@@ -20,7 +24,13 @@ export default async function loginAction(prevState: State, formData: FormData) 
   }
 
   setAuthCookie(res)
-  redirect("/")
+
+  return {
+    status: "success" as const,
+    message: "Login success",
+    userInfo: { ...parsedRes.user }
+  }
+
 }
 
 const setAuthCookie = (response: Response) => {

@@ -7,7 +7,8 @@ export const ItemType = {
 export type State =
   {
     status: "success",
-    message: string
+    message: string,
+    userInfo: User
   } |
   {
     status: "error",
@@ -25,5 +26,18 @@ export type RegisterFormData = {
 export type LoginFormData = {
   email: string,
   password: string
+}
+
+
+
+export interface Project {
+  id: string,
+  name: string
+}
+
+
+export interface User {
+  email: string,
+  id: string
 }
 

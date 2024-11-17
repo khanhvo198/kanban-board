@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { useForm } from "react-hook-form";
 import loginAction from "./actions";
+import { useAuthStore } from "@/stores/auth.store";
+import { useRouter } from "next/navigation"
 
 
 const LoginForm = () => {
@@ -43,7 +45,10 @@ const LoginForm = () => {
 export default function Login() {
   const [state, formAction] = useFormState(loginAction, null)
 
+  const router = useRouter()
+
   const toast = useToast()
+
 
   useEffect(() => {
     if (state?.status === "error" && state.message) {
@@ -54,6 +59,10 @@ export default function Login() {
         status: "error",
         duration: 3000
       })
+    } else if (state?.status === "success" && state.userInfo) {
+      console.log(state.userInfo)
+      useAuthStore.setState({ user: { ...state.userInfo } })
+      router.push("/")
     }
   }, [state])
 

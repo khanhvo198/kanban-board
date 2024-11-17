@@ -1,7 +1,12 @@
-import { Avatar, Box, Button, Flex, FormControl, Icon, IconButton, Input, List, ListIcon, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react"
+import { useSideBarStore } from "@/stores/sidebar.store"
+import { Avatar, Box, Button, Flex, FormControl, IconButton, Input, List, ListIcon, ListItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useColorModeValue, useDisclosure, usePanEvent } from "@chakra-ui/react"
+import { useEffect, useRef } from "react"
 import { FaCircle } from "react-icons/fa"
 import { AddIcon } from "../../public/assets/icons/add-button"
-import { useRef } from "react"
+import { ProjectManagementIcon } from "../../public/assets/icons/logo"
+import Link from "next/link"
+import { useParams, usePathname, useSelectedLayoutSegment } from "next/navigation"
+import { SideBarItem } from "./sidebar-item"
 
 
 export const SideBar = () => {
@@ -14,6 +19,10 @@ export const SideBar = () => {
   const handleCreateNewProject = () => {
 
   }
+
+  const { projects } = useSideBarStore()
+
+  const pathname = usePathname()
 
   const handleOnClick = () => {
     console.log("Hahahah")
@@ -39,36 +48,50 @@ export const SideBar = () => {
         minH="100%"
         justifyContent="space-between"
       >
-        <List spacing={6} px="20px" py="30px">
-          <ListItem display="flex" alignItems="center" justifyContent="space-between">
-            <Text color={textColor} fontSize="sm" fontWeight="bold">MY PROJECTS</Text>
-            <IconButton
-              icon={<AddIcon />}
-              aria-label="new-project"
-              onClick={onOpen}
-              variant="unstyled"
-              display="flex"
-              justifyContent="end"
-            />
-          </ListItem>
-          <ListItem display="flex" alignItems="center">
-            <ListIcon as={FaCircle} color="#7AC555" fontSize="8px" />
-            <Text ml={3} fontWeight="bold">Mobile App</Text>
-          </ListItem>
-          <ListItem display="flex" alignItems="center">
-            <ListIcon as={FaCircle} color="#FFA500" fontSize="8px" />
-            <Text ml={3} color={textColor}>Website Redesign</Text>
-          </ListItem>
-          <ListItem display="flex" alignItems="center">
-            <ListIcon as={FaCircle} color="#E4CCFD" fontSize="8px" />
-            <Text ml={3} color={textColor}>Design System</Text>
-          </ListItem>
-          <ListItem display="flex" alignItems="center">
-            <ListIcon as={FaCircle} color="#76A5EA" fontSize="8px" />
-            <Text ml={3} color={textColor}>Wireframes</Text>
-          </ListItem>
-        </List>
+        <Box mt="1rem">
+          <Link href="/">
+            <Box display="flex" alignItems="center" justifyContent="space-evenly">
+              <ProjectManagementIcon />
+              <Text fontSize="1.5rem" fontWeight="semibold">Arcturus</Text>
+            </Box>
+          </Link>
+          <List spacing={2} px="0.5rem" py="0.6rem">
+            <ListItem display="flex" alignItems="center" justifyContent="space-between" px="15px">
+              <Text color={textColor} fontSize="sm" fontWeight="bold">MY PROJECTS</Text>
+              <IconButton
+                icon={<AddIcon />}
+                aria-label="new-project"
+                onClick={onOpen}
+                variant="unstyled"
+                display="flex"
+                justifyContent="end"
+              />
+            </ListItem>
+            {/* <ListItem display="flex" alignItems="center"> */}
+            {/*   <ListIcon as={FaCircle} color="#7AC555" fontSize="8px" /> */}
+            {/*   <Text ml={3} fontWeight="bold">Mobile App</Text> */}
+            {/* </ListItem> */}
+            {/* <ListItem display="flex" alignItems="center"> */}
+            {/*   <ListIcon as={FaCircle} color="#FFA500" fontSize="8px" /> */}
+            {/*   <Text ml={3} color={textColor}>Website Redesign</Text> */}
+            {/* </ListItem> */}
+            {/* <ListItem display="flex" alignItems="center"> */}
+            {/*   <ListIcon as={FaCircle} color="#E4CCFD" fontSize="8px" /> */}
+            {/*   <Text ml={3} color={textColor}>Design System</Text> */}
+            {/* </ListItem> */}
+            {/* <ListItem display="flex" alignItems="center"> */}
+            {/*   <ListIcon as={FaCircle} color="#76A5EA" fontSize="8px" /> */}
+            {/*   <Text ml={3} color={textColor}>Wireframes</Text> */}
+            {/* </ListItem> */}
 
+            {
+              projects.map((project, index) => (
+                <SideBarItem key={index} project={project} />
+              ))
+            }
+          </List>
+
+        </Box>
         <Stack mb={5}>
           <hr style={{ width: "100%", margin: "auto", borderColor: "#DBDBDB" }} />
           <Flex alignItems="center" justifyContent="center">
