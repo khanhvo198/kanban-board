@@ -2,12 +2,12 @@ import { API_URL } from "@/shared/utils/constants";
 import { Project } from "@/shared/utils/types";
 import { create } from "zustand";
 
-interface SideBarState {
+interface ProjectState {
   projects: Project[];
   fetchProjects: () => void;
 }
 
-export const useSideBarStore = create<SideBarState>((set) => ({
+export const useProjectStore = create<ProjectState>((set) => ({
   projects: [],
   fetchProjects: async () => {
     const res = await fetch(`${API_URL}/projects`, {
@@ -15,7 +15,6 @@ export const useSideBarStore = create<SideBarState>((set) => ({
       credentials: "include",
     });
     const parsedRes = await res.json();
-    console.log(parsedRes);
     set({ projects: [...parsedRes.projects] });
   },
 }));

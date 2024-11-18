@@ -91,8 +91,7 @@ export default function Login() {
         duration: 3000,
       });
     } else if (state?.status === "success" && state.userInfo) {
-      console.log(state.userInfo);
-      useAuthStore.setState({ user: { ...state.userInfo } });
+      useAuthStore.getState().fetchUser();
       router.push("/");
     }
   }, [state]);

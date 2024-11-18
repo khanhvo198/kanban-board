@@ -1,4 +1,3 @@
-import { useSideBarStore } from "@/stores/sidebar.store";
 import {
   Avatar,
   Box,
@@ -22,11 +21,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { AddIcon } from "../../public/assets/icons/add-button";
 import { ProjectManagementIcon } from "../../public/assets/icons/logo";
 import { SideBarItem } from "./sidebar-item";
+import { useProjectStore } from "@/stores/project.store";
 
 export const SideBar = () => {
   const textColor = useColorModeValue("#787486", "white");
@@ -37,13 +36,7 @@ export const SideBar = () => {
 
   const handleCreateNewProject = () => {};
 
-  const { projects } = useSideBarStore();
-
-  const pathname = usePathname();
-
-  const handleOnClick = () => {
-    console.log("Hahahah");
-  };
+  const { projects } = useProjectStore();
 
   return (
     <>
