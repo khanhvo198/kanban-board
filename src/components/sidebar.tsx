@@ -1,42 +1,32 @@
+import { NewProjectModal } from "@/shared/ui/new-project.modal";
+import { useProjectStore } from "@/stores/project.store";
 import {
   Avatar,
   Box,
-  Button,
   Flex,
-  FormControl,
   IconButton,
-  Input,
   List,
   ListItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRef } from "react";
 import { AddIcon } from "../../public/assets/icons/add-button";
 import { ProjectManagementIcon } from "../../public/assets/icons/logo";
 import { SideBarItem } from "./sidebar-item";
-import { useProjectStore } from "@/stores/project.store";
 
 export const SideBar = () => {
   const textColor = useColorModeValue("#787486", "white");
 
-  const titleRef = useRef<HTMLInputElement>(null);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleCreateNewProject = () => {};
+  const modalProps = useDisclosure();
 
   const { projects } = useProjectStore();
+
+  const handleOnCreate = (title: string) => {
+    console.log(title);
+  };
 
   return (
     <>
@@ -83,7 +73,7 @@ export const SideBar = () => {
               <IconButton
                 icon={<AddIcon />}
                 aria-label="new-project"
-                onClick={onOpen}
+                onClick={modalProps.onOpen}
                 variant="unstyled"
                 display="flex"
                 justifyContent="end"
@@ -124,30 +114,7 @@ export const SideBar = () => {
           </Flex>
         </Stack>
       </Box>
-
-      <Modal onClose={onClose} size={{ base: "sm", md: "md" }} isOpen={isOpen}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create New Project</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl>
-              <Input
-                variant="flushed"
-                ref={titleRef}
-                placeholder="Add title for this project"
-                size="lg"
-              />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleCreateNewProject}>
-              Create
-            </Button>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <NewProjectModal onCreate={handleOnCreate} {...modalProps} />
     </>
   );
 };
