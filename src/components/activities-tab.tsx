@@ -1,9 +1,5 @@
-import { Box } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react";
 
 export const ActivitiesTab = () => {
-  return (
-    <Box>
-      Activities Tab
-    </Box>
-  )
-}
+  return <Box>Activities Tab</Box>;
+};

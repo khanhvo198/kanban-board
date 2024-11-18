@@ -1,7 +1,6 @@
-"use client"
-import { NavBar } from "../navbar"
-import { SideBar } from "../sidebar"
-import { Box } from "@chakra-ui/react"
+"use client";
+import { Box } from "@chakra-ui/react";
+import { SideBar } from "../sidebar";
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,5 +10,5 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </Box>
     </Box>
-  )
-}
+  );
+};

@@ -1,6 +1,10 @@
 import { Box } from "@chakra-ui/react";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <Box
       bgImg={"/assets/images/bg.png"}
@@ -10,7 +14,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       alignItems="center"
       color="#fff"
     >
-
       <Box
         borderRadius="5px"
         backdropFilter="blur(10px)"
@@ -20,5 +23,5 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {children}
       </Box>
     </Box>
-  )
+  );
 }

@@ -1,15 +1,19 @@
-import { Avatar, Box, Input, InputGroup, InputRightElement, List, ListIcon, ListItem, Stack, Text } from "@chakra-ui/react"
-import { FC, useEffect, useRef, useState } from "react"
-import { PiPaperPlaneTiltThin } from "react-icons/pi"
-
-
-interface CommentState {
-  id: number,
-  comment: string
-}
+import {
+  Avatar,
+  Box,
+  Input,
+  InputGroup,
+  InputRightElement,
+  List,
+  ListItem,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { FC, useEffect, useRef } from "react";
+import { PiPaperPlaneTiltThin } from "react-icons/pi";
 
 interface CommentMessageProps {
-  isAuthor: boolean
+  isAuthor: boolean;
 }
 
 const CommentMessage: FC<CommentMessageProps> = ({ isAuthor }) => {
@@ -25,19 +29,19 @@ const CommentMessage: FC<CommentMessageProps> = ({ isAuthor }) => {
         <Text>Test comment</Text>
       </Box>
     </ListItem>
-  )
-}
+  );
+};
 
 export const CommentsTab = () => {
-  const bottomBoxRef = useRef<HTMLDivElement>(null)
+  const bottomBoxRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    bottomBoxRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    bottomBoxRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [])
+    scrollToBottom();
+  }, []);
 
   return (
     <Stack>
@@ -54,7 +58,13 @@ export const CommentsTab = () => {
         <CommentMessage isAuthor={true} />
       </List>
       <Box ref={bottomBoxRef} />
-      <Box position="fixed" bottom="10px" left="10px" width="93%" backdropFilter="blur(10px)">
+      <Box
+        position="fixed"
+        bottom="10px"
+        left="10px"
+        width="93%"
+        backdropFilter="blur(10px)"
+      >
         <InputGroup display="flex">
           <Input borderColor="#868686" />
           <InputRightElement>
@@ -63,5 +73,5 @@ export const CommentsTab = () => {
         </InputGroup>
       </Box>
     </Stack>
-  )
-}
+  );
+};

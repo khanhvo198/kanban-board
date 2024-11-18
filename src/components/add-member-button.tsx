@@ -1,15 +1,26 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Button, IconButton, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverFooter, PopoverTrigger, Stack, Text } from "@chakra-ui/react";
-import { AutoComplete, AutoCompleteInput, AutoCompleteItem, AutoCompleteList, AutoCompleteTag } from "@choc-ui/chakra-autocomplete";
+import {
+  Button,
+  IconButton,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverFooter,
+  PopoverTrigger,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+  AutoCompleteTag,
+} from "@choc-ui/chakra-autocomplete";
 
 export const AddMemberButton = () => {
-
-  const peoples = [
-    "Daniel haha",
-    "Test totoo",
-    "Simon Tyth",
-    "John toise"
-  ];
+  const peoples = ["Daniel haha", "Test totoo", "Simon Tyth", "John toise"];
 
   return (
     <Popover isLazy>
@@ -58,5 +69,5 @@ export const AddMemberButton = () => {
         </PopoverFooter>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};

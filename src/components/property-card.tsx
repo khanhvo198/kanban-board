@@ -1,13 +1,17 @@
-import { Flex, Text } from "@chakra-ui/react"
-import { ReactNode, FC } from "react"
+import { Flex, Text } from "@chakra-ui/react";
+import { FC, ReactNode } from "react";
 
 export interface FieldCardProps {
-  label: string,
-  isVertical?: boolean,
-  children?: ReactNode
+  label: string;
+  isVertical?: boolean;
+  children?: ReactNode;
 }
 
-export const PropertyCard: FC<FieldCardProps> = ({ label, isVertical, children }) => {
+export const PropertyCard: FC<FieldCardProps> = ({
+  label,
+  isVertical,
+  children,
+}) => {
   return (
     <Flex w="100%" direction={isVertical ? "column" : "row"}>
       <Flex flex="1">
@@ -17,6 +21,5 @@ export const PropertyCard: FC<FieldCardProps> = ({ label, isVertical, children }
         {children}
       </Flex>
     </Flex>
-  )
-}
-
+  );
+};

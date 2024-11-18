@@ -3,8 +3,8 @@ import { User } from "@/shared/utils/types";
 import { create } from "zustand";
 
 interface AuthState {
-  user: User,
-  fetchUser: () => void
+  user: User;
+  fetchUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -12,10 +12,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   fetchUser: async () => {
     const res = await fetch(`${API_URL}/user`, {
       method: "GET",
-      credentials: "include"
-    })
-    const parsedRes = await res.json()
-    console.log(parsedRes)
-    set({ user: { ...parsedRes.user } })
-  }
-}))
+      credentials: "include",
+    });
+    const parsedRes = await res.json();
+    console.log(parsedRes);
+    set({ user: { ...parsedRes.user } });
+  },
+}));
