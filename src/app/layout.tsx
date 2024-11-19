@@ -9,10 +9,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useEffect(() => {
-    useAuthStore.getState().fetchUser();
-  }, []);
-
   return (
     <html lang="en">
       <body>
