@@ -1,8 +1,7 @@
-import { API_URL } from "@/shared/utils/constants";
+import { getCurrentUser } from "@/api/user";
 import { User } from "@/shared/utils/types";
 import { create } from "zustand";
 import { useProjectStore } from "./project.store";
-import { getCurrentUser } from "@/api/user";
 
 interface AuthState {
   isAuthenticated: boolean;

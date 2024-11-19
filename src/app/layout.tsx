@@ -1,6 +1,4 @@
 "use client";
-import { useAuthStore } from "@/stores/auth.store";
-import { useEffect } from "react";
 import "./globals.css";
 import { Providers } from "./providers";
 
