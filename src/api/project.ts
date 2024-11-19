@@ -6,8 +6,16 @@ interface ProjectDTO {
   name: string;
 }
 
+interface MultipleProjectResponse {
+  projects: Project[];
+}
+
+interface SingleProjectResponse {
+  project: Project;
+}
+
 export const getAllProjects = async (): Promise<Project[]> => {
-  const res = await axios.get(`${API_URL}/projects`, {
+  const res = await axios.get<MultipleProjectResponse>(`${API_URL}/projects`, {
     withCredentials: true,
   });
 
@@ -19,7 +27,7 @@ export const getCurrentProject = async ({
 }: {
   id: string;
 }): Promise<Project> => {
-  const res = await axios.get(`${API_URL}/projects`, {
+  const res = await axios.get<SingleProjectResponse>(`${API_URL}/projects`, {
     params: { id },
     withCredentials: true,
   });
@@ -30,9 +38,13 @@ export const getCurrentProject = async ({
 export const createProject = async (project: {
   project: ProjectDTO;
 }): Promise<Project> => {
-  const res = await axios.post(`${API_URL}/projects`, project, {
-    withCredentials: true,
-  });
+  const res = await axios.post<SingleProjectResponse>(
+    `${API_URL}/projects`,
+    project,
+    {
+      withCredentials: true,
+    },
+  );
 
   return res.data.project;
 };
