@@ -14,17 +14,17 @@ import {
 import { FC, useRef } from "react";
 
 interface Props extends UseDisclosureProps {
-  onCreate: (title: string) => void;
+  onCreate: (title: string) => Promise<void>;
 }
 
 export const NewProjectModal: FC<Props> = ({ isOpen, onClose, onCreate }) => {
   const titleRef = useRef<HTMLInputElement>(null);
 
-  const handleOnCreate = () => {
+  const handleOnCreate = async () => {
     const title = titleRef.current?.value;
 
     if (title) {
-      onCreate(title);
+      await onCreate(title);
     }
   };
 

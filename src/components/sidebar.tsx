@@ -16,6 +16,7 @@ import Link from "next/link";
 import { AddIcon } from "../../public/assets/icons/add-button";
 import { ProjectManagementIcon } from "../../public/assets/icons/logo";
 import { SideBarItem } from "./sidebar-item";
+import { createProject } from "@/api/project";
 
 export const SideBar = () => {
   const textColor = useColorModeValue("#787486", "white");
@@ -24,8 +25,18 @@ export const SideBar = () => {
 
   const { projects } = useProjectStore();
 
-  const handleOnCreate = (title: string) => {
-    console.log(title);
+  const handleOnCreate = async (title: string) => {
+    const projectData = {
+      project: {
+        name: title,
+      },
+    };
+    const newProject = await createProject(projectData);
+
+    useProjectStore.setState((state) => ({
+      projects: [newProject, ...state.projects],
+    }));
+    modalProps.onClose();
   };
 
   return (
