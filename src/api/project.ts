@@ -22,15 +22,13 @@ export const getAllProjects = async (): Promise<Project[]> => {
   return res.data.projects;
 };
 
-export const getCurrentProject = async ({
-  id,
-}: {
-  id: string;
-}): Promise<Project> => {
-  const res = await axios.get<SingleProjectResponse>(`${API_URL}/projects`, {
-    params: { id },
-    withCredentials: true,
-  });
+export const getCurrentProject = async (id: string): Promise<Project> => {
+  const res = await axios.get<SingleProjectResponse>(
+    `${API_URL}/projects/${id}`,
+    {
+      withCredentials: true,
+    },
+  );
 
   return res.data.project;
 };

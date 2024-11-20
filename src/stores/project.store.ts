@@ -1,4 +1,4 @@
-import { getAllProjects } from "@/api/project";
+import { getAllProjects, getCurrentProject } from "@/api/project";
 import { Project } from "@/shared/utils/types";
 import { create } from "zustand";
 
@@ -6,7 +6,7 @@ interface ProjectState {
   projects: Project[];
   fetchProjects: () => void;
   currentProject: Project;
-  fetchCurrentProject: () => void;
+  fetchCurrentProject: (id: string) => void;
 }
 
 export const useProjectStore = create<ProjectState>((set) => ({
@@ -16,5 +16,8 @@ export const useProjectStore = create<ProjectState>((set) => ({
     const projects = await getAllProjects();
     set({ projects: [...projects] });
   },
-  fetchCurrentProject: async () => {},
+  fetchCurrentProject: async (id: string) => {
+    const res = await getCurrentProject(id);
+    set({ currentProject: { ...res } });
+  },
 }));
