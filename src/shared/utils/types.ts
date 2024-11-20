@@ -29,6 +29,17 @@ export type LoginFormData = {
 export interface Project {
   id: string;
   name: string;
+  members: Member[];
+  task: Task[];
+}
+
+export interface Member {
+  information: User;
+}
+
+export interface Task {
+  id: string;
+  title: string;
 }
 
 export interface User {
