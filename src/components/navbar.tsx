@@ -15,8 +15,11 @@ import { LuKanbanSquare } from "react-icons/lu";
 import { AddMemberButton } from "./add-member-button";
 import { Section } from "./section";
 import { ToggleThemeButton } from "./toggle-theme-button";
+import { useProjectStore } from "@/stores/project.store";
 
 export const NavBar = () => {
+  const { name, members } = useProjectStore((state) => state.currentProject);
+
   return (
     <Box
       position="fixed"
@@ -33,7 +36,7 @@ export const NavBar = () => {
         alignItems="center"
       >
         <Heading as="h2" fontWeight="semibold" fontSize="3xl">
-          Mobile App
+          {name}
         </Heading>
 
         <ToggleThemeButton />
@@ -48,11 +51,8 @@ export const NavBar = () => {
 
           <Flex align="center">
             <AvatarGroup size="sm" max={3} ml="3" px={2}>
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
+              {members &&
+                members.map((member) => <Avatar key={member.information.id} />)}
             </AvatarGroup>
             <Divider
               orientation="vertical"
@@ -64,14 +64,6 @@ export const NavBar = () => {
             <AddMemberButton />
           </Flex>
         </Flex>
-      </Box>
-      <Box px={{ base: "1rem" }} py={{ base: "1rem" }}>
-        <Button leftIcon={<LuKanbanSquare />} mr={2}>
-          Kanban
-        </Button>
-        <Button leftIcon={<CiViewTable />} colorScheme="blackAlpha">
-          Table
-        </Button>
       </Box>
     </Box>
   );

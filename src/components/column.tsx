@@ -49,7 +49,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
         {/* <IconButton aria-label="add-icon" icon={<AddIcon />} onClick={onOpen} /> */}
         <Droppable droppableId={status}>
           {(droppableProvided, snapshot) => (
-            <Box maxHeight="calc(100vh - 12rem) " overflowY="scroll">
+            <Box maxHeight="calc(100vh - 10rem) " overflowY="scroll">
               <List
                 as="div"
                 pb="5rem"
