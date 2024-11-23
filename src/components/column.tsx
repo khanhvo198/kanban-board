@@ -2,18 +2,10 @@ import { AddNewTaskForm } from "@/shared/ui/new-task-form";
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
   IconButton,
   List,
   ListItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
   useDisclosure,
@@ -29,8 +21,6 @@ export interface ColumnProps {
 
 export const Column = ({ cards, status }: ColumnProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleSubmit = () => {};
 
   return (
     <>
@@ -69,22 +59,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
           )}
         </Droppable>
       </Stack>
-      <Modal onClose={onClose} size={{ base: "sm", md: "md" }} isOpen={isOpen}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Task</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <AddNewTaskForm />
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-              Create
-            </Button>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <AddNewTaskForm isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

@@ -1,162 +1,195 @@
-import { AddIcon } from "@chakra-ui/icons";
 import {
-  Flex,
+  Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  List,
-  ListIcon,
-  ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
-  Text,
   Textarea,
+  UseDisclosureProps,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
-import { FC, useState } from "react";
-import { CiCircleRemove } from "react-icons/ci";
-import { MdOutlineChecklist } from "react-icons/md";
-import { FileUpload } from "../../components/file-upload";
+import { FC, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 
-interface TaskFormProps {}
+interface FormValues {
+  title: string;
+  description: string;
+  assignee: Option[];
+  due: string;
+  tags: Option[];
+}
 
-export const AddNewTaskForm: FC<TaskFormProps> = () => {
-  const [checkList, setCheckList] = useState<string[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
+interface Option {
+  value: string;
+  colorScheme?: string;
+}
 
-  const handleAddNewCheckList = () => {
-    setCheckList([...checkList, ""]);
-  };
+export const AddNewTaskForm: FC<Partial<UseDisclosureProps>> = ({
+  onClose,
+  isOpen,
+}) => {
+  const { register, control, handleSubmit } = useForm<FormValues>();
 
-  const handleRemoveCheckList = (index: number) => {
-    checkList.splice(index, 1);
-    setCheckList([...checkList]);
-  };
-
-  const handleRemoveFile = (index: number) => {
-    files.splice(index, 1);
-    setFiles([...files]);
-  };
-
-  const handleOnChangeCheckList = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => {
-    checkList[index] = event.target.value;
-    setCheckList([...checkList]);
-  };
-
-  const handleOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    }
-  };
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
-    <>
-      <Stack>
-        <FormControl>
-          <Input variant="flushed" placeholder="Title" size="lg" />
-        </FormControl>
-        <FormControl>
-          <Textarea variant="flushed" placeholder="Description" size="lg" />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Assignee</FormLabel>
-          <Select
-            isMulti
-            variant="flushed"
-            options={[
-              {
-                label: "MyStic",
-                value: "MyStic",
-              },
-              {
-                label: "Gumayusi",
-                value: "Gumayusi",
-              },
-            ]}
-          ></Select>
-        </FormControl>
-        <FormControl mt={6}>
-          <FormLabel fontWeight="semibold">Due date</FormLabel>
-          <Input variant="flushed" type="date" placeholder="Due date" />
-        </FormControl>
-        <FormControl mt={6}>
-          <Flex justify="space-between" align="center">
-            <FormLabel fontWeight="semibold" m="0">
-              Check list
-            </FormLabel>
-            <AddIcon onClick={handleAddNewCheckList} cursor="pointer" />
-          </Flex>
-          <List>
-            {checkList.map((text, index) => (
-              <ListItem display="flex" alignItems="center" key={index}>
-                <ListIcon as={MdOutlineChecklist} />
+    <Modal onClose={onClose!} size={{ base: "sm", md: "md" }} isOpen={isOpen!}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Task</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <form>
+            <Stack>
+              <FormControl>
                 <Input
                   variant="flushed"
-                  value={text}
-                  onChange={(event) => handleOnChangeCheckList(event, index)}
+                  placeholder="Title"
+                  size="lg"
+                  {...register("title")}
                 />
-                <ListIcon
-                  as={CiCircleRemove}
-                  fontSize="20"
-                  onClick={() => handleRemoveCheckList(index)}
-                  cursor="pointer"
+              </FormControl>
+              <FormControl>
+                <Textarea
+                  variant="flushed"
+                  placeholder="Description"
+                  size="lg"
+                  {...register("description")}
                 />
-              </ListItem>
-            ))}
-          </List>
-        </FormControl>
-        <FormControl mt={6}>
-          <Flex justify="space-between" align="center">
-            <FormLabel fontWeight="semibold" m="0">
-              Attachments
-            </FormLabel>
-            <FileUpload onChange={handleOnFileChange} />
-          </Flex>
-          <List spacing={2} mt={2}>
-            {files.map((file, index) => (
-              <ListItem
-                key={index}
-                display="flex"
-                alignItems="center"
-                justifyItems="space-between"
-              >
-                <Text flexGrow="1" isTruncated>
-                  {file.name}
-                </Text>
-                <ListIcon
-                  as={CiCircleRemove}
-                  fontSize="20"
-                  onClick={() => handleRemoveFile(index)}
-                  cursor="pointer"
+              </FormControl>
+              <FormControl>
+                <FormLabel>Assignee</FormLabel>
+                <Controller
+                  name="assignee"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      isMulti
+                      variant="flushed"
+                      options={[
+                        {
+                          label: "MyStic",
+                          value: "MyStic",
+                        },
+                        {
+                          label: "Gumayusi",
+                          value: "Gumayusi",
+                        },
+                      ]}
+                    ></Select>
+                  )}
                 />
-              </ListItem>
-            ))}
-          </List>
-        </FormControl>
-        <FormControl mt={6}>
-          <FormLabel>Tags</FormLabel>
-          <Select
-            isMulti
-            variant="flushed"
-            options={[
-              {
-                label: "Design",
-                value: "Design",
-                colorScheme: "teal",
-              },
-              {
-                label: "Web",
-                value: "Web",
-                colorScheme: "red",
-              },
-            ]}
-          ></Select>
-        </FormControl>
-      </Stack>
-    </>
+              </FormControl>
+              <FormControl mt={6}>
+                <FormLabel fontWeight="semibold">Due date</FormLabel>
+                <Input
+                  variant="flushed"
+                  type="date"
+                  placeholder="Due date"
+                  {...register("due")}
+                />
+              </FormControl>
+              {/* <FormControl mt={6}> */}
+              {/*   <Flex justify="space-between" align="center"> */}
+              {/*     <FormLabel fontWeight="semibold" m="0"> */}
+              {/*       Check list */}
+              {/*     </FormLabel> */}
+              {/*     <AddIcon onClick={handleAddNewCheckList} cursor="pointer" /> */}
+              {/*   </Flex> */}
+              {/*   <List> */}
+              {/*     {checkList.map((text, index) => ( */}
+              {/*       <ListItem display="flex" alignItems="center" key={index}> */}
+              {/*         <ListIcon as={MdOutlineChecklist} /> */}
+              {/*         <Input */}
+              {/*           variant="flushed" */}
+              {/*           value={text} */}
+              {/*           onChange={(event) => handleOnChangeCheckList(event, index)} */}
+              {/*         /> */}
+              {/*         <ListIcon */}
+              {/*           as={CiCircleRemove} */}
+              {/*           fontSize="20" */}
+              {/*           onClick={() => handleRemoveCheckList(index)} */}
+              {/*           cursor="pointer" */}
+              {/*         /> */}
+              {/*       </ListItem> */}
+              {/*     ))} */}
+              {/*   </List> */}
+              {/* </FormControl> */}
+              {/* <FormControl mt={6}> */}
+              {/*   <Flex justify="space-between" align="center"> */}
+              {/*     <FormLabel fontWeight="semibold" m="0"> */}
+              {/*       Attachments */}
+              {/*     </FormLabel> */}
+              {/*     <FileUpload onChange={handleOnFileChange} /> */}
+              {/*   </Flex> */}
+              {/*   <List spacing={2} mt={2}> */}
+              {/*     {files.map((file, index) => ( */}
+              {/*       <ListItem */}
+              {/*         key={index} */}
+              {/*         display="flex" */}
+              {/*         alignItems="center" */}
+              {/*         justifyItems="space-between" */}
+              {/*       > */}
+              {/*         <Text flexGrow="1" isTruncated> */}
+              {/*           {file.name} */}
+              {/*         </Text> */}
+              {/*         <ListIcon */}
+              {/*           as={CiCircleRemove} */}
+              {/*           fontSize="20" */}
+              {/*           onClick={() => handleRemoveFile(index)} */}
+              {/*           cursor="pointer" */}
+              {/*         /> */}
+              {/*       </ListItem> */}
+              {/*     ))} */}
+              {/*   </List> */}
+              {/* </FormControl> */}
+              <FormControl mt={6}>
+                <FormLabel>Tags</FormLabel>
+                <Controller
+                  name="tags"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      isMulti
+                      variant="flushed"
+                      options={[
+                        {
+                          label: "Design",
+                          value: "Design",
+                          colorScheme: "teal",
+                        },
+                        {
+                          label: "Web",
+                          value: "Web",
+                          colorScheme: "red",
+                        },
+                      ]}
+                    ></Select>
+                  )}
+                />
+              </FormControl>
+            </Stack>
+          </form>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={onSubmit}>
+            Create
+          </Button>
+          <Button onClick={onClose}>Close</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
