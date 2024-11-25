@@ -21,6 +21,7 @@ import registerAction from "./actions";
 
 type RegisterFormData = {
   email: string;
+  name: string;
   password: string;
   confirmPassword: string;
 };
@@ -43,6 +44,12 @@ const RegisterForm = () => {
           <FormLabel>Email</FormLabel>
           <Input tabIndex={1} borderColor="#868686" {...register("email")} />
           <ErrorMessage error={errors.email} />
+        </FormControl>
+
+        <FormControl isRequired isDisabled={pending}>
+          <FormLabel>Name</FormLabel>
+          <Input tabIndex={1} borderColor="#868686" {...register("name")} />
+          <ErrorMessage error={errors.name} />
         </FormControl>
 
         <FormControl isRequired isDisabled={pending}>
