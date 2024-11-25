@@ -1,5 +1,5 @@
+import { useProjectStore } from "@/stores/project.store";
 import {
-  Box,
   Button,
   FormControl,
   FormLabel,
@@ -16,14 +16,14 @@ import {
   UseDisclosureProps,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface FormValues {
   title: string;
   description: string;
-  assignee: Option[];
-  due: string;
+  assignees: Option[];
+  due: Date;
   tags: Option[];
 }
 
@@ -32,14 +32,43 @@ interface Option {
   colorScheme?: string;
 }
 
-export const AddNewTaskForm: FC<Partial<UseDisclosureProps>> = ({
+type AddNewTaskFormProps = {
+  status: string;
+} & Partial<UseDisclosureProps>;
+
+export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
   onClose,
   isOpen,
+  status,
 }) => {
   const { register, control, handleSubmit } = useForm<FormValues>();
 
+  const currentProject = useProjectStore((state) => state.currentProject);
+  const [options, setOptions] = useState<Option[]>([]);
+
+  useEffect(() => {
+    const newOptions = currentProject.members
+      ? currentProject.members.map((member) => {
+          const name = member.information.name;
+          return {
+            value: name,
+            label: name,
+          } as Option;
+        })
+      : [];
+    setOptions(newOptions);
+  }, [currentProject.members, currentProject]);
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    const newTask = {
+      title: data.title,
+      description: data.description,
+      due: data.due,
+      assignees: data.assignees.map((assignee) => ({ userId: assignee.value })),
+      tag: data.tags.map((tag) => tag.value),
+      projectId: currentProject.id,
+    };
+    console.log(newTask);
   });
 
   return (
@@ -68,25 +97,16 @@ export const AddNewTaskForm: FC<Partial<UseDisclosureProps>> = ({
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>Assignee</FormLabel>
+                <FormLabel>Assignees</FormLabel>
                 <Controller
-                  name="assignee"
+                  name="assignees"
                   control={control}
                   render={({ field }) => (
                     <Select
                       {...field}
                       isMulti
                       variant="flushed"
-                      options={[
-                        {
-                          label: "MyStic",
-                          value: "MyStic",
-                        },
-                        {
-                          label: "Gumayusi",
-                          value: "Gumayusi",
-                        },
-                      ]}
+                      options={options}
                     ></Select>
                   )}
                 />
