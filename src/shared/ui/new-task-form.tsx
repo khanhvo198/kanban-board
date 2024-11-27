@@ -1,3 +1,4 @@
+import { InputWithTag } from "@/components/tag-input";
 import { useProjectStore } from "@/stores/project.store";
 import {
   Button,
@@ -176,29 +177,30 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
               {/* </FormControl> */}
               <FormControl mt={6}>
                 <FormLabel>Tags</FormLabel>
-                <Controller
-                  name="tags"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isMulti
-                      variant="flushed"
-                      options={[
-                        {
-                          label: "Design",
-                          value: "Design",
-                          colorScheme: "teal",
-                        },
-                        {
-                          label: "Web",
-                          value: "Web",
-                          colorScheme: "red",
-                        },
-                      ]}
-                    ></Select>
-                  )}
-                />
+                {/* <Controller */}
+                {/*   name="tags" */}
+                {/*   control={control} */}
+                {/*   render={({ field }) => ( */}
+                {/*     <Select */}
+                {/*       {...field} */}
+                {/*       isMulti */}
+                {/*       variant="flushed" */}
+                {/*       options={[ */}
+                {/*         { */}
+                {/*           label: "Design", */}
+                {/*           value: "Design", */}
+                {/*           colorScheme: "teal", */}
+                {/*         }, */}
+                {/*         { */}
+                {/*           label: "Web", */}
+                {/*           value: "Web", */}
+                {/*           colorScheme: "red", */}
+                {/*         }, */}
+                {/*       ]} */}
+                {/*     ></Select> */}
+                {/*   )} */}
+                {/* /> */}
+                <InputWithTag />
               </FormControl>
             </Stack>
           </form>
