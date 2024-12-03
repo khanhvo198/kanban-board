@@ -47,3 +47,8 @@ export interface User {
   name: string;
   id: string;
 }
+
+export interface Option {
+  value: string;
+  colorScheme: string;
+}

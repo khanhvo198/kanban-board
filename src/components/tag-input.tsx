@@ -1,3 +1,4 @@
+import { Option } from "@/shared/utils/types";
 import {
   Box,
   Flex,
@@ -14,12 +15,15 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
-const projectTags = ["Design", "Web"];
+const projectTags = [
+  { value: "Design", colorScheme: "teal" },
+  { value: "Web", colorScheme: "teal" },
+] as Option[];
 
 export const InputWithTag = () => {
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Option[]>([]);
   const [isOpenAutoComplete, setIsOpenAutoComplete] = useState(false);
-  const [filteredTags, setFilteredTags] = useState<string[]>(projectTags);
+  const [filteredTags, setFilteredTags] = useState<Option[]>(projectTags);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [currentActiveSuggestion, setCurrentActiveSuggestion] =
@@ -98,10 +102,14 @@ export const InputWithTag = () => {
         newTag = inputRef.current.value;
       }
       newTag = trimTag(newTag);
-      if (newTag) {
-        setTags([...tags, newTag]);
+      if (newTag && !isExistTag(tags, newTag)) {
+        setTags([...tags, { value: newTag, colorScheme: "teal" }]);
       }
     }
+  };
+
+  const isExistTag = (tags: Option[], target: string) => {
+    return tags.some((tag) => tag.value.toLowerCase() === target.toLowerCase());
   };
 
   const onFocusCapture = () => {
@@ -114,17 +122,14 @@ export const InputWithTag = () => {
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const newTag = e.target.value;
     const filtered = projectTags.filter((projectTag) =>
-      projectTag.toLowerCase().includes(value.toLowerCase()),
+      projectTag.value.toLowerCase().includes(newTag.toLowerCase()),
     );
-    if (value) {
-      const isExistTag = projectTags.some(
-        (projectTag) => projectTag.toLowerCase() === value.toLowerCase(),
-      );
 
-      if (!isExistTag) {
-        filtered.push(`Create new "${value}"`);
+    if (newTag) {
+      if (!isExistTag(projectTags, newTag)) {
+        filtered.push({ value: `Create new "${newTag}"`, colorScheme: "teal" });
       }
     }
 
@@ -133,7 +138,14 @@ export const InputWithTag = () => {
   };
 
   const handleOnClickItem = (item: string) => {
-    setTags([...tags, item]);
+    const match = item.match(/^Create new \"(.+)\"/);
+    let newTag = item;
+    if (match && match.length > 1) {
+      newTag = match[1];
+    }
+    if (!isExistTag(tags, newTag)) {
+      setTags([...tags, { value: newTag, colorScheme: "teal" }]);
+    }
   };
 
   const handleHoverListItem = (e: MouseEvent) => {
@@ -146,6 +158,11 @@ export const InputWithTag = () => {
     setCurrentActiveSuggestion(node);
   };
 
+  const handleOnDeleteTag = (tag: string) => {
+    const newTags = tags.filter((currentTag) => currentTag.value !== tag);
+    setTags([...newTags]);
+  };
+
   return (
     <>
       <Popover isOpen={isOpenAutoComplete} autoFocus={false} matchWidth>
@@ -153,9 +170,11 @@ export const InputWithTag = () => {
           <Box>
             <Flex gap={2} wrap="wrap">
               {tags.map((tag, index) => (
-                <Tag key={index} colorScheme="cyan">
-                  {tag}
-                  <TagCloseButton />
+                <Tag key={index} cursor="pointer" colorScheme={tag.colorScheme}>
+                  {tag.value}
+                  <TagCloseButton
+                    onClick={() => handleOnDeleteTag(tag.value)}
+                  />
                 </Tag>
               ))}
             </Flex>
@@ -176,13 +195,13 @@ export const InputWithTag = () => {
                 <ListItem
                   key={index}
                   cursor="pointer"
-                  onClick={() => handleOnClickItem(tag)}
+                  onClick={() => handleOnClickItem(tag.value)}
                   p={2}
                   borderRadius="5px"
                   tabIndex={0}
                   onMouseEnter={handleHoverListItem}
                 >
-                  {tag}
+                  {tag.value}
                 </ListItem>
               ))}
             </List>
