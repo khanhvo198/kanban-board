@@ -52,3 +52,7 @@ export interface Option {
   value: string;
   colorScheme: string;
 }
+
+export interface TagListHandle {
+  tags: Option[];
+}

@@ -17,8 +17,9 @@ import {
   UseDisclosureProps,
 } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { TagListHandle } from "../utils/types";
 
 interface FormValues {
   title: string;
@@ -47,6 +48,8 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
   const currentProject = useProjectStore((state) => state.currentProject);
   const [options, setOptions] = useState<Option[]>([]);
 
+  const tagListRef = useRef<TagListHandle>(null);
+
   useEffect(() => {
     const newOptions = currentProject.members
       ? currentProject.members.map((member) => {
@@ -66,8 +69,9 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
       description: data.description,
       due: data.due,
       assignees: data.assignees.map((assignee) => ({ userId: assignee.value })),
-      tag: data.tags.map((tag) => tag.value),
+      tags: tagListRef.current?.tags,
       projectId: currentProject.id,
+      status: status,
     };
     console.log(newTask);
   });
@@ -200,7 +204,7 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
                 {/*     ></Select> */}
                 {/*   )} */}
                 {/* /> */}
-                <InputWithTag />
+                <InputWithTag ref={tagListRef} />
               </FormControl>
             </Stack>
           </form>
