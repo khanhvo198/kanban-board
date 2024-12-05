@@ -38,11 +38,13 @@ export interface Member {
 }
 
 export interface Task {
+  id: string;
   title: string;
   description: string;
   assignees: Assignee[];
   due: Date;
   tags: Option[];
+  status: string;
 }
 
 export interface Assignee {
@@ -56,10 +58,12 @@ export interface User {
 }
 
 export interface Option {
-  value: string;
+  name: string;
   colorScheme: string;
 }
 
 export interface TagListHandle {
   tags: Option[];
 }
+
+export type TaskRequest = Partial<Task>;

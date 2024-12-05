@@ -24,8 +24,8 @@ import {
 } from "react";
 
 const projectTags = [
-  { value: "Design", colorScheme: "#fff" },
-  { value: "Web", colorScheme: "#000" },
+  { name: "Design", colorScheme: "#fff" },
+  { name: "Web", colorScheme: "#000" },
 ] as Option[];
 
 export const InputWithTag = forwardRef<TagListHandle>(
@@ -115,14 +115,14 @@ export const InputWithTag = forwardRef<TagListHandle>(
         newTag = trimTag(newTag);
         if (newTag && !isExistTag(tags, newTag)) {
           const colorScheme = getColorScheme(newTag);
-          setTags([...tags, { value: newTag, colorScheme }]);
+          setTags([...tags, { name: newTag, colorScheme }]);
         }
       }
     };
 
     const isExistTag = (tags: Option[], target: string) => {
       return tags.some(
-        (tag) => tag.value.toLowerCase() === target.toLowerCase(),
+        (tag) => tag.name.toLowerCase() === target.toLowerCase(),
       );
     };
 
@@ -138,13 +138,13 @@ export const InputWithTag = forwardRef<TagListHandle>(
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
       const newTag = e.target.value;
       const filtered = projectTags.filter((projectTag) =>
-        projectTag.value.toLowerCase().includes(newTag.toLowerCase()),
+        projectTag.name.toLowerCase().includes(newTag.toLowerCase()),
       );
 
       if (newTag) {
         if (!isExistTag(projectTags, newTag)) {
           filtered.push({
-            value: `Create new "${newTag}"`,
+            name: `Create new "${newTag}"`,
             colorScheme: "teal",
           });
         }
@@ -162,12 +162,12 @@ export const InputWithTag = forwardRef<TagListHandle>(
       }
       if (!isExistTag(tags, newTag)) {
         const colorScheme = getColorScheme(newTag);
-        setTags([...tags, { value: newTag, colorScheme }]);
+        setTags([...tags, { name: newTag, colorScheme }]);
       }
     };
 
     const getColorScheme = (newTag: string) => {
-      const projectTag = projectTags.find((tag) => tag.value === newTag);
+      const projectTag = projectTags.find((tag) => tag.name === newTag);
 
       if (projectTag) {
         return projectTag.colorScheme;
@@ -187,7 +187,7 @@ export const InputWithTag = forwardRef<TagListHandle>(
     };
 
     const handleOnDeleteTag = (tag: string) => {
-      const newTags = tags.filter((currentTag) => currentTag.value !== tag);
+      const newTags = tags.filter((currentTag) => currentTag.name !== tag);
       setTags([...newTags]);
     };
 
@@ -203,9 +203,9 @@ export const InputWithTag = forwardRef<TagListHandle>(
                     cursor="pointer"
                     colorScheme={tag.colorScheme}
                   >
-                    {tag.value}
+                    {tag.name}
                     <TagCloseButton
-                      onClick={() => handleOnDeleteTag(tag.value)}
+                      onClick={() => handleOnDeleteTag(tag.name)}
                     />
                   </Tag>
                 ))}
@@ -227,13 +227,13 @@ export const InputWithTag = forwardRef<TagListHandle>(
                   <ListItem
                     key={index}
                     cursor="pointer"
-                    onClick={() => handleOnClickItem(tag.value)}
+                    onClick={() => handleOnClickItem(tag.name)}
                     p={2}
                     borderRadius="5px"
                     tabIndex={0}
                     onMouseEnter={handleHoverListItem}
                   >
-                    {tag.value}
+                    {tag.name}
                   </ListItem>
                 ))}
               </List>

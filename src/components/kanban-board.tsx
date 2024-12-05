@@ -15,53 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { useEffect, useRef, useState } from "react";
-import { CardProps } from "./card";
 import { Column } from "./column";
+import { useProjectStore } from "@/stores/project.store";
+import { Task } from "@/shared/utils/types";
 
-const data: CardProps[] = [
-  {
-    id: 1,
-    text: "hehehe1",
-    status: "New",
-  },
-  {
-    id: 2,
-    text: "hehehe2",
-    status: "New",
-  },
-  {
-    id: 3,
-    text: "hehehe3",
-    status: "In progress",
-  },
-  {
-    id: 4,
-    text: "hehehe4",
-    status: "In progress",
-  },
-  {
-    id: 5,
-    text: "hehehe5",
-    status: "Done",
-  },
-  {
-    id: 6,
-    text: "hehehe6",
-    status: "Done",
-  },
-  {
-    id: 7,
-    text: "hehehe7",
-    status: "Done",
-  },
-  {
-    id: 8,
-    text: "hehehe8",
-    status: "Done",
-  },
-];
-
-type CardWithStatus = Record<string, CardProps[]>;
+type CardWithStatus = Record<string, Task[]>;
 
 export const KanbanBoard = () => {
   const [statuses, setStatuses] = useState<string[]>([
@@ -71,10 +29,23 @@ export const KanbanBoard = () => {
   ]);
 
   const [tasks, setTasks] = useState<CardWithStatus>({});
-
   const { isOpen, onClose, onOpen } = useDisclosure();
-
   const titleRef = useRef<HTMLInputElement>(null);
+  const currentProject = useProjectStore((state) => state.currentProject);
+
+  useEffect(() => {
+    console.log(currentProject);
+    if (!currentProject.tasks) {
+      return;
+    }
+
+    setTasks(
+      Object.groupBy(
+        currentProject.tasks,
+        ({ status }) => status,
+      ) as CardWithStatus,
+    );
+  }, [currentProject]);
 
   const handleCreateNewList = () => {
     if (!titleRef.current) {
@@ -82,15 +53,10 @@ export const KanbanBoard = () => {
     }
     const title = titleRef.current.value;
     statuses.push(title);
-
     setStatuses([...statuses]);
 
     onClose();
   };
-
-  useEffect(() => {
-    setTasks(Object.groupBy(data, ({ status }) => status) as CardWithStatus);
-  }, []);
 
   const handleOnDragEnd = (result: DropResult) => {
     const { destination, source } = result;
@@ -105,8 +71,8 @@ export const KanbanBoard = () => {
       return;
     }
 
-    const sourceStatus = source.droppableId as CardProps["status"];
-    const destinationStatus = destination.droppableId as CardProps["status"];
+    const sourceStatus = source.droppableId as Task["status"];
+    const destinationStatus = destination.droppableId as Task["status"];
     const sourcePost = tasks[sourceStatus][source.index]!;
     const destinationPost = tasks[destinationStatus][destination.index] ?? {
       status: destinationStatus,
@@ -125,10 +91,10 @@ export const KanbanBoard = () => {
   };
 
   const updatePostStatusLocal = (
-    sourcePost: CardProps,
-    source: { status: CardProps["status"]; index: number },
+    sourcePost: Task,
+    source: { status: Task["status"]; index: number },
     destination: {
-      status: CardProps["status"];
+      status: Task["status"];
       index?: number; // undefined if dropped after the last item
     },
     tasks: CardWithStatus,

@@ -12,10 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { Droppable } from "@hello-pangea/dnd";
 import { FaCircle } from "react-icons/fa";
-import { CardComponent, CardProps } from "./card";
+import { CardComponent } from "./card";
+import { Task } from "@/shared/utils/types";
 
 export interface ColumnProps {
-  cards: CardProps[];
+  cards: Task[];
   status: string;
 }
 

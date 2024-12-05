@@ -22,18 +22,13 @@ import { useRef } from "react";
 import { IoIosAttach } from "react-icons/io";
 import { LuMessageSquare } from "react-icons/lu";
 import { PreviewTaskForm } from "./preview-task-form";
-
-export interface CardProps {
-  id: number;
-  text: string;
-  status: string;
-}
+import { Task } from "@/shared/utils/types";
 
 export const CardComponent = ({
   card,
   index,
 }: {
-  card: CardProps;
+  card: Task;
   index: number;
 }) => {
   const cardRef = useRef(null);
@@ -61,27 +56,27 @@ export const CardComponent = ({
               <CardBody px={4} pt={4}>
                 <Stack>
                   <HStack spacing={2}>
-                    <Tag size="md" colorScheme="teal">
-                      Design
-                    </Tag>
-                    <Tag size="md" colorScheme="yellow">
-                      Web
-                    </Tag>
+                    {card.tags.map((tag) => (
+                      <Tag
+                        key={tag.name}
+                        size="md"
+                        colorScheme={tag.colorScheme}
+                      >
+                        {tag.name}
+                      </Tag>
+                    ))}
                   </HStack>
                   <Heading fontWeight="semibold" fontSize="md">
-                    {card.text}
+                    {card.title}
                   </Heading>
                   <Text fontSize="sm" color="#4D4F52">
-                    All the details are in the file, I'm sure it will turn out
-                    cool
+                    {card.description}
                   </Text>
                   <Flex justifyContent="space-between">
                     <AvatarGroup max={2} size="sm">
-                      <Avatar />
-                      <Avatar />
-                      <Avatar />
-                      <Avatar />
-                      <Avatar />
+                      {card.assignees.map((assignee) => (
+                        <Avatar key={assignee.userId} />
+                      ))}
                     </AvatarGroup>
                     <HStack>
                       <Flex align="center">

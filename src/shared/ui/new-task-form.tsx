@@ -1,3 +1,4 @@
+import { createNewTask } from "@/api/task";
 import { InputWithTag } from "@/components/tag-input";
 import { useProjectStore } from "@/stores/project.store";
 import {
@@ -19,8 +20,7 @@ import {
 import { Select } from "chakra-react-select";
 import { FC, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TagListHandle, Task } from "../utils/types";
-import { createNewTask } from "@/api/task";
+import { TagListHandle, TaskRequest } from "../utils/types";
 
 interface FormValues {
   title: string;
@@ -31,7 +31,7 @@ interface FormValues {
 }
 
 interface Option {
-  value: string;
+  name: string;
   colorScheme?: string;
 }
 
@@ -55,7 +55,7 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
     const newOptions = currentProject.members
       ? currentProject.members.map((member) => {
           return {
-            value: member.information.id,
+            name: member.information.id,
             label: member.information.name,
           } as Option;
         })
@@ -68,15 +68,16 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
       title: data.title,
       description: data.description,
       due: data.due,
-      assignees: data.assignees.map((assignee) => ({ userId: assignee.value })),
+      assignees: data.assignees.map((assignee) => ({ userId: assignee.name })),
       tags: tagListRef.current?.tags,
       projectId: currentProject.id,
       status: status,
-    } as Task;
+    } as TaskRequest;
 
     const response = await createNewTask(task);
-
     useProjectStore.setState({ currentProject: response.currentProject });
+
+    onClose!();
   });
 
   return (
