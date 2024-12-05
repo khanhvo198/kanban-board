@@ -24,8 +24,8 @@ import {
 } from "react";
 
 const projectTags = [
-  { value: "Design", colorScheme: "organe" },
-  { value: "Web", colorScheme: "blue" },
+  { value: "Design", colorScheme: "#fff" },
+  { value: "Web", colorScheme: "#000" },
 ] as Option[];
 
 export const InputWithTag = forwardRef<TagListHandle>(

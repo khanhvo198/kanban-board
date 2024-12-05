@@ -59,7 +59,7 @@ export const Column = ({ cards, status }: ColumnProps) => {
           )}
         </Droppable>
       </Stack>
-      <AddNewTaskForm isOpen={isOpen} onClose={onClose} />
+      <AddNewTaskForm isOpen={isOpen} onClose={onClose} status={status} />
     </>
   );
 };

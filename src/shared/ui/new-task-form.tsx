@@ -19,7 +19,8 @@ import {
 import { Select } from "chakra-react-select";
 import { FC, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TagListHandle } from "../utils/types";
+import { TagListHandle, Task } from "../utils/types";
+import { createNewTask } from "@/api/task";
 
 interface FormValues {
   title: string;
@@ -53,18 +54,17 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
   useEffect(() => {
     const newOptions = currentProject.members
       ? currentProject.members.map((member) => {
-          const name = member.information.name;
           return {
-            value: name,
-            label: name,
+            value: member.information.id,
+            label: member.information.name,
           } as Option;
         })
       : [];
     setOptions(newOptions);
   }, [currentProject.members, currentProject]);
 
-  const onSubmit = handleSubmit((data) => {
-    const newTask = {
+  const onSubmit = handleSubmit(async (data) => {
+    const task = {
       title: data.title,
       description: data.description,
       due: data.due,
@@ -72,8 +72,11 @@ export const AddNewTaskForm: FC<AddNewTaskFormProps> = ({
       tags: tagListRef.current?.tags,
       projectId: currentProject.id,
       status: status,
-    };
-    console.log(newTask);
+    } as Task;
+
+    const response = await createNewTask(task);
+
+    useProjectStore.setState({ currentProject: response.currentProject });
   });
 
   return (

@@ -30,7 +30,7 @@ export interface Project {
   id: string;
   name: string;
   members: Member[];
-  task: Task[];
+  tasks: Task[];
 }
 
 export interface Member {
@@ -38,8 +38,15 @@ export interface Member {
 }
 
 export interface Task {
-  id: string;
   title: string;
+  description: string;
+  assignees: Assignee[];
+  due: Date;
+  tags: Option[];
+}
+
+export interface Assignee {
+  userId: string;
 }
 
 export interface User {
