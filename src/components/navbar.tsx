@@ -1,21 +1,18 @@
 "use client";
 
+import { useProjectStore } from "@/stores/project.store";
 import {
   Avatar,
   AvatarGroup,
   Box,
-  Button,
   Divider,
   Flex,
   Heading,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { CiViewTable } from "react-icons/ci";
-import { LuKanbanSquare } from "react-icons/lu";
 import { AddMemberButton } from "./add-member-button";
 import { Section } from "./section";
 import { ToggleThemeButton } from "./toggle-theme-button";
-import { useProjectStore } from "@/stores/project.store";
 
 export const NavBar = () => {
   const { name, members } = useProjectStore((state) => state.currentProject);

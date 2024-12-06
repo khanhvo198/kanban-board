@@ -55,7 +55,7 @@ export const CardComponent = ({
             >
               <CardBody px={4} pt={4}>
                 <Stack>
-                  <HStack spacing={2}>
+                  <HStack spacing={2} wrap="wrap">
                     {card.tags.map((tag) => (
                       <Tag
                         key={tag.name}
@@ -79,14 +79,18 @@ export const CardComponent = ({
                       ))}
                     </AvatarGroup>
                     <HStack>
-                      <Flex align="center">
-                        <LuMessageSquare size="16px" />
-                        <Text fontSize="xs">20</Text>
-                      </Flex>
-                      <Flex align="center">
-                        <IoIosAttach size="16px" />
-                        <Text fontSize="xs">2</Text>
-                      </Flex>
+                      {card.comments.length > 0 && (
+                        <Flex align="center">
+                          <LuMessageSquare size="16px" />
+                          <Text fontSize="xs">{card.comments.length}</Text>
+                        </Flex>
+                      )}
+                      {card.files.length > 0 && (
+                        <Flex align="center">
+                          <IoIosAttach size="16px" />
+                          <Text fontSize="xs">{card.files.length}</Text>
+                        </Flex>
+                      )}
                     </HStack>
                   </Flex>
                 </Stack>

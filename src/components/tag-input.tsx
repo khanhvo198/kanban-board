@@ -1,4 +1,6 @@
+import { getRandomColor } from "@/shared/utils/colors";
 import { Option, TagListHandle } from "@/shared/utils/types";
+import { useProjectStore } from "@/stores/project.store";
 import {
   Box,
   Flex,
@@ -23,28 +25,32 @@ import {
   useState,
 } from "react";
 
-const projectTags = [
-  { name: "Design", colorScheme: "#fff" },
-  { name: "Web", colorScheme: "#000" },
-] as Option[];
-
 export const InputWithTag = forwardRef<TagListHandle>(
   function InputWithTagComponent(props, ref) {
     const [tags, setTags] = useState<Option[]>([]);
     const [isOpenAutoComplete, setIsOpenAutoComplete] = useState(false);
-    const [filteredTags, setFilteredTags] = useState<Option[]>(projectTags);
+    const [filteredTags, setFilteredTags] = useState<Option[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const [currentActiveSuggestion, setCurrentActiveSuggestion] =
       useState<HTMLElement | null>(null);
+    const [projectTags, setCurrentProjectTags] = useState<Option[]>([]);
 
     const activeColor = useColorModeValue("orange", "purple");
+    const currentProject = useProjectStore((state) => state.currentProject);
 
     useEffect(() => {
       document.addEventListener("keydown", handleKeyBoardEvent);
 
       return () => document.removeEventListener("keydown", handleKeyBoardEvent);
     });
+
+    useEffect(() => {
+      if (!currentProject.tags) {
+      }
+      setCurrentProjectTags(currentProject.tags);
+      setFilteredTags(currentProject.tags);
+    }, [currentProject]);
 
     useImperativeHandle(ref, () => ({ tags }));
 
@@ -143,14 +149,20 @@ export const InputWithTag = forwardRef<TagListHandle>(
 
       if (newTag) {
         if (!isExistTag(projectTags, newTag)) {
+          const randomColor = getRandomColor(tags);
           filtered.push({
             name: `Create new "${newTag}"`,
-            colorScheme: "teal",
+            colorScheme: randomColor,
           });
         }
       }
 
       setFilteredTags(filtered);
+      if (filtered.length > 0) {
+        setIsOpenAutoComplete(true);
+      } else {
+        setIsOpenAutoComplete(false);
+      }
       styleBackgroundFirstChild();
     };
 
@@ -172,7 +184,9 @@ export const InputWithTag = forwardRef<TagListHandle>(
       if (projectTag) {
         return projectTag.colorScheme;
       } else {
-        return "teal";
+        const randomColor = getRandomColor(tags);
+        console.log(randomColor);
+        return randomColor;
       }
     };
 

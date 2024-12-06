@@ -31,6 +31,17 @@ export interface Project {
   name: string;
   members: Member[];
   tasks: Task[];
+  tags: Tag[];
+}
+
+export interface File {
+  id: string;
+  fileName: string;
+}
+
+export interface Comment {
+  id: string;
+  content: string;
 }
 
 export interface Member {
@@ -43,8 +54,10 @@ export interface Task {
   description: string;
   assignees: Assignee[];
   due: Date;
-  tags: Option[];
+  tags: Tag[];
   status: string;
+  files: File[];
+  comments: Comment[];
 }
 
 export interface Assignee {
@@ -58,6 +71,11 @@ export interface User {
 }
 
 export interface Option {
+  name: string;
+  colorScheme: string;
+}
+
+export interface Tag {
   name: string;
   colorScheme: string;
 }
