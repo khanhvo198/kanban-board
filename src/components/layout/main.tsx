@@ -10,8 +10,8 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <Box h="100%" w="100%" overflowX="auto" overflowY="hidden">
-      <Box display="inline-flex" h="100%" w="100%">
+    <Box h="100%" overflowX="auto" overflowY="hidden">
+      <Box display="inline-flex" h="100%">
         <SideBar />
         {children}
       </Box>

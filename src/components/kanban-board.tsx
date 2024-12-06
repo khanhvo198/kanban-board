@@ -22,11 +22,7 @@ import { Task } from "@/shared/utils/types";
 type CardWithStatus = Record<string, Task[]>;
 
 export const KanbanBoard = () => {
-  const [statuses, setStatuses] = useState<string[]>([
-    "New",
-    "In progress",
-    "Done",
-  ]);
+  const [statuses, setStatuses] = useState<string[]>([]);
 
   const [tasks, setTasks] = useState<CardWithStatus>({});
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -34,10 +30,14 @@ export const KanbanBoard = () => {
   const currentProject = useProjectStore((state) => state.currentProject);
 
   useEffect(() => {
-    console.log(currentProject);
     if (!currentProject.tasks) {
       return;
     }
+
+    if (!currentProject.columns) {
+      return;
+    }
+    setStatuses([...currentProject.columns]);
 
     setTasks(
       Object.groupBy(
@@ -53,6 +53,7 @@ export const KanbanBoard = () => {
     }
     const title = titleRef.current.value;
     statuses.push(title);
+    console.log(statuses);
     setStatuses([...statuses]);
 
     onClose();
@@ -129,12 +130,7 @@ export const KanbanBoard = () => {
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Box pt={{ base: "10rem" }} px={{ base: "1rem" }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            minW="700px"
-            gap={2}
-          >
+          <Box display="flex" minW="700px" gap={2}>
             {statuses.map((status) => {
               return (
                 <Column cards={tasks[status]} status={status} key={status} />

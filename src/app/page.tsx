@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 export default function Home() {
   return (
     <MainLayout>
-      <Box ml={{ base: 0, md: "255px" }} w="100%">
+      <Box ml={{ base: 0, md: "255px" }} w="calc(100vw - 255px)">
         <Box
           height="100%"
           width="100%"
