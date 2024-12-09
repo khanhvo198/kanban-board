@@ -32,6 +32,7 @@ export interface Project {
   members: Member[];
   tasks: Task[];
   tags: Tag[];
+  columns: string[];
 }
 
 export interface File {
@@ -84,4 +85,10 @@ export interface TagListHandle {
   tags: Option[];
 }
 
+export interface Column {
+  name: string;
+}
+
 export type TaskRequest = Partial<Task>;
+
+export type ColumnRequest = Partial<Column>;

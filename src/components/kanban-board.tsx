@@ -1,3 +1,6 @@
+import { createNewColumn } from "@/api/column";
+import { Task } from "@/shared/utils/types";
+import { useProjectStore } from "@/stores/project.store";
 import {
   Box,
   Button,
@@ -16,8 +19,6 @@ import {
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { useEffect, useRef, useState } from "react";
 import { Column } from "./column";
-import { useProjectStore } from "@/stores/project.store";
-import { Task } from "@/shared/utils/types";
 
 type CardWithStatus = Record<string, Task[]>;
 
@@ -47,14 +48,20 @@ export const KanbanBoard = () => {
     );
   }, [currentProject]);
 
-  const handleCreateNewList = () => {
+  const handleCreateNewList = async () => {
     if (!titleRef.current) {
       return;
     }
     const title = titleRef.current.value;
-    statuses.push(title);
-    console.log(statuses);
-    setStatuses([...statuses]);
+
+    const newColumn = await createNewColumn(
+      {
+        name: title,
+      },
+      currentProject.id,
+    );
+
+    setStatuses([...statuses, newColumn.name]);
 
     onClose();
   };
@@ -131,9 +138,9 @@ export const KanbanBoard = () => {
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Box pt={{ base: "10rem" }} px={{ base: "1rem" }}>
           <Box display="flex" minW="700px" gap={2}>
-            {statuses.map((status) => {
+            {statuses.map((status, index) => {
               return (
-                <Column cards={tasks[status]} status={status} key={status} />
+                <Column cards={tasks[status]} status={status} key={index} />
               );
             })}
 
