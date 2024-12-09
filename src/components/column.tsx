@@ -3,6 +3,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
+  Icon,
   IconButton,
   List,
   ListItem,
@@ -14,6 +15,11 @@ import { Droppable } from "@hello-pangea/dnd";
 import { FaCircle } from "react-icons/fa";
 import { CardComponent } from "./card";
 import { Task } from "@/shared/utils/types";
+import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
+import {
+  PiDotsThreeOutlineVertical,
+  PiDotsThreeOutlineVerticalFill,
+} from "react-icons/pi";
 
 export interface ColumnProps {
   cards: Task[];
@@ -25,17 +31,20 @@ export const Column = ({ cards, status }: ColumnProps) => {
 
   return (
     <>
-      <Stack w="350px">
-        <Flex justifyContent="space-between">
+      <Stack w="300px">
+        <Flex justifyContent="space-between" height="40px" alignItems="center">
           <Flex align="center">
             <FaCircle color="red" fontSize="8px" />
             <Text ml={2}>{status}</Text>
           </Flex>
-          <IconButton
-            icon={<AddIcon />}
-            aria-label="add-new-task"
-            onClick={onOpen}
-          />
+          <Flex alignItems="center">
+            <Icon fontSize="md">
+              <BsThreeDots size="md" />
+            </Icon>
+            <Icon fontSize="md" ml="0.3rem" onClick={onOpen} cursor="pointer">
+              <AddIcon />
+            </Icon>
+          </Flex>
         </Flex>
         {/* <IconButton aria-label="add-icon" icon={<AddIcon />} onClick={onOpen} /> */}
         <Droppable droppableId={status}>

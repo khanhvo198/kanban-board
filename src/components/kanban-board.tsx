@@ -144,7 +144,7 @@ export const KanbanBoard = () => {
               );
             })}
 
-            <Stack w="350px">
+            <Stack w="300px">
               <Button onClick={onOpen}>Add another list</Button>
             </Stack>
           </Box>
